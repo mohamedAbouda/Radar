@@ -192,7 +192,7 @@
                  
                       <div class="dropdown user-menu">
                           <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <img src="img/avatar-2-64.png" alt="">
+                            {{Auth::user()->full_name}} <img src="img/avatar-2-64.png" alt="">
                           </button>
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                            
@@ -223,11 +223,11 @@
           <li class="brown with-sub">
               <span>
                   <i class="font-icon glyphicon glyphicon-user"></i>
-                  <span class="lbl">Users</span>
+                  <span class="lbl">Admins</span>
               </span>
               <ul>
-                  <li><a href="#"><span class="lbl">Add </span></a></li>
-                  <li><a href="#"><span class="lbl">All</span></a></li>
+                  <li><a href="{{route('dashboard.admin.create.admin')}}"><span class="lbl">Add </span></a></li>
+                  <li><a href="{{route('dashboard.admins.all')}}"><span class="lbl">All Admins</span></a></li>
                  
               </ul>
           </li>
