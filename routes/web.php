@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +12,25 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-Route::get('/', 'HomeController@index');
+
+Route::get('/', function (){
+
+    $data=[
+        'event'=>'UserSignedUp',
+        'data'=>[
+            'username'=>'moWagdy'
+        ]
+    ];
+
+Redis::publish('test-channel',json_encode($data));
+
+
+return view('welcomeSocket');
+});
+
+
+
+//Route::get('/', 'HomeController@index');
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
 
