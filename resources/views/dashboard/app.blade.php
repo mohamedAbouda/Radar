@@ -245,7 +245,7 @@
               </ul>
           </li>
 
-               <li class="brown with-sub">
+            <!--    <li class="brown with-sub">
               <span>
                   <i class="font-icon glyphicon glyphicon-user"></i>
                   <span class="lbl">Car Owners</span>
@@ -267,7 +267,7 @@
                   <li><a href="{{route('dashboard.cars.index')}}"><span class="lbl">All Cars</span></a></li>
                  
               </ul>
-          </li>
+          </li> -->
         
          
       </ul>
