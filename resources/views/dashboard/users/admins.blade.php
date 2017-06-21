@@ -29,19 +29,6 @@
 	                        <a href="{{ route('dashboard.users.edit', ['user' => $user->id]) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
 	                      	@if(Auth::user()->id != $user->id)
 
-	                        @if($user->activated == '1')
-	                        <form action="{{ route('dashboard.admin.deactivate.user') }}" style="display: inline-block" method="post">
-	                            {{ csrf_field() }}
-	                            <input type="hidden" name="id" value="{{$user->id}}">
-	                            <button class="btn btn-danger btn-xs">Deactivate</button>
-	                        </form>
-	                        @else
-	                        <form action="{{ route('dashboard.admin.activate.user') }}" style="display: inline-block" method="post">
-	                            {{ csrf_field() }}
-	                            <input type="hidden" name="id" value="{{$user->id}}">
-	                            <button class="btn btn-primary btn-xs">activate</button>
-	                        </form>
-	                        @endif
 	                 
 	                        @if($user->hasRole('admin'))
 	                         <form action="{{ route('dashboard.admin.remove.admin') }}" style="display: inline-block" method="post">
