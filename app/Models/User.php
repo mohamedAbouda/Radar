@@ -34,4 +34,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Role');
     }
+
+    public function car()
+    {
+        return $this->hasOne('App\Models\Car','driver_id');
+    }
 }

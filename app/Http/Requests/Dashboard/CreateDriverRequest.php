@@ -25,7 +25,7 @@ class CreateDriverRequest extends FormRequest
     {
         return [
             'full_name'=>'required',
-            'email'=>'required|unique:users,email',
+            'email'=>'required|email|unique:users,email',
             'phone_number'=>'required|regex:/^([\+0]([0-9]+[\- ]?)+)$/',
             'password'=>'required',
         ];

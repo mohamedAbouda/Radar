@@ -245,7 +245,7 @@
               </ul>
           </li>
 
-            <!--    <li class="brown with-sub">
+               <li class="brown with-sub">
               <span>
                   <i class="font-icon glyphicon glyphicon-user"></i>
                   <span class="lbl">Car Owners</span>
@@ -263,11 +263,11 @@
                   <span class="lbl">Cars</span>
               </span>
               <ul>
-                  <li><a href="{{route('dashboard.cars.create')}}"><span class="lbl">Add </span></a></li>
+                 
                   <li><a href="{{route('dashboard.cars.index')}}"><span class="lbl">All Cars</span></a></li>
                  
               </ul>
-          </li> -->
+          </li>
         
          
       </ul>

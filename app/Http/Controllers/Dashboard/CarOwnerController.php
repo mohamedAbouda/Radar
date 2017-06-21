@@ -58,7 +58,9 @@ class CarOwnerController extends Controller
      */
     public function show($id)
     {
-        //
+        $carOwner = User::where('id',$id)->first();;
+
+        return view($this->mainRedirect . 'show')->with(['carOwner'=>$carOwner]);
     }
 
     /**
@@ -106,5 +108,11 @@ class CarOwnerController extends Controller
 
         $carOwner->delete();
         return redirect()->route($this->mainRedirect . 'index');
+    }
+
+    public function storeCar(Request $request)
+    {
+        $id = $request->input('id');
+        return view('dashboard.cars.create')->with('id',$id);
     }
 }

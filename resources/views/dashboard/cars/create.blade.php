@@ -11,6 +11,7 @@
             <form action="{{ route('dashboard.cars.index') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="col-md-6">
+                <input type="hidden" name="owner_id" value="{{$id}}">
                     <div class="form-group">
                         <label for="#">Car Model</label>
                       

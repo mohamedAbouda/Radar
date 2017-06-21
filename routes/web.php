@@ -69,6 +69,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 	Route::post('dashboard/store/admin', [
     'as' => 'admin.store.admin',
     'uses' => 'Dashboard\UserController@storeAdmin'
-]);
+	]);
+
+	Route::post('owner/add/car', [
+    'as' => 'admin.add.car.owner',
+    'uses' => 'Dashboard\CarOwnerController@storeCar'
+	]);
 
 });

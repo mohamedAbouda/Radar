@@ -20,6 +20,7 @@
 					<tr>
 						<td>{{ strip_tags($driver->full_name) }}</td>
 						<td>
+						<a href="{{ route('dashboard.drivers.show', ['driver' => $driver->id]) }}" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> Show</a>
 	                        <a href="{{ route('dashboard.drivers.edit', ['driver' => $driver->id]) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
 	                        <form action="{{ route('dashboard.drivers.destroy', ['driver' => $driver->id]) }}" style="display: inline-block" method="post">
 	                            {{ csrf_field() }}

@@ -69,7 +69,9 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        //
+        $driver = User::with('car')->where('id',$id)->first();;
+
+        return view($this->mainRedirect . 'show')->with(['driver'=>$driver]);
     }
 
     /**
