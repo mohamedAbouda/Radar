@@ -1,5 +1,5 @@
 @extends('dashboard.app')
-@section('title','Edit Cook')
+@section('title','Edit Admin')
 @section('description','')
 @section('content')
 <div class="col-md-12">

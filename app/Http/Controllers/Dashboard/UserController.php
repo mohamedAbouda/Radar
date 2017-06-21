@@ -140,8 +140,7 @@ class UserController extends Controller
     {
         $id = $request->input('id');
         $user = User::findOrFail($id);
-        $role = Role::where('name', 'admin')->first();
-        $user->detachRole($role);
+        $user->delete();
 
         return redirect()->back();
 

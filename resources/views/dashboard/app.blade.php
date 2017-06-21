@@ -32,7 +32,7 @@
 
   <header class="site-header">
       <div class="container-fluid">
-          <a href="#" class="site-logo">
+          <a href="{{url('dashboard')}}" class="site-logo">
               <img class="hidden-md-down" src="{{asset('img/logo-2.png')}}" alt="">
               <img class="hidden-lg-up" src="{{asset('img/logo-2-mob.png')}}" alt="">
           </a>
@@ -222,12 +222,49 @@
          
           <li class="brown with-sub">
               <span>
-                  <i class="font-icon glyphicon glyphicon-user"></i>
+                  <i class="fa fa-user-secret"></i>
                   <span class="lbl">Admins</span>
               </span>
               <ul>
                   <li><a href="{{route('dashboard.admin.create.admin')}}"><span class="lbl">Add </span></a></li>
                   <li><a href="{{route('dashboard.admins.all')}}"><span class="lbl">All Admins</span></a></li>
+                 
+              </ul>
+          </li>
+
+
+          <li class="brown with-sub">
+              <span>
+                  <i class="fa fa-users"></i>
+                  <span class="lbl">Drivers</span>
+              </span>
+              <ul>
+                  <li><a href="{{route('dashboard.drivers.create')}}"><span class="lbl">Add </span></a></li>
+                  <li><a href="{{route('dashboard.drivers.index')}}"><span class="lbl">All Drivers</span></a></li>
+                 
+              </ul>
+          </li>
+
+               <li class="brown with-sub">
+              <span>
+                  <i class="font-icon glyphicon glyphicon-user"></i>
+                  <span class="lbl">Car Owners</span>
+              </span>
+              <ul>
+                  <li><a href="{{route('dashboard.carOwners.create')}}"><span class="lbl">Add </span></a></li>
+                  <li><a href="{{route('dashboard.carOwners.index')}}"><span class="lbl">All Car Owners</span></a></li>
+                 
+              </ul>
+          </li>
+
+                 <li class="brown with-sub">
+              <span>
+                  <i class="fa fa-car"></i>
+                  <span class="lbl">Cars</span>
+              </span>
+              <ul>
+                  <li><a href="{{route('dashboard.cars.create')}}"><span class="lbl">Add </span></a></li>
+                  <li><a href="{{route('dashboard.cars.index')}}"><span class="lbl">All Cars</span></a></li>
                  
               </ul>
           </li>

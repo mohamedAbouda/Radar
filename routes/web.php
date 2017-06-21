@@ -24,7 +24,14 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 		'uses' => 'Dashboard\HomeController@index',
 		'as' => 'index'
 	]);
+
 	Route::resource('users', 'Dashboard\UserController');
+	Route::resource('drivers', 'Dashboard\DriverController');
+	Route::resource('carOwners', 'Dashboard\CarOwnerController');
+	Route::resource('cars', 'Dashboard\CarController');
+
+
+
 
 
 

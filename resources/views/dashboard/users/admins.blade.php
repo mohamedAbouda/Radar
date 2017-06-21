@@ -1,6 +1,6 @@
 @extends('dashboard.app')
-@section('title','User')
-@section('description','User Data')
+@section('title','Admin')
+@section('description','Admin Data')
 @section('content')
    @if(Auth::user()->hasRole('admin'))
 
