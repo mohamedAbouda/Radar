@@ -54,7 +54,7 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        $car = Car::with('driver')->where('id',$id)->first();;
+        $car = Car::with('driver','owner')->where('id',$id)->first();;
 
         return view($this->mainRedirect . 'show')->with(['car'=>$car]);
     }

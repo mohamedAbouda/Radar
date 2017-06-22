@@ -39,7 +39,16 @@
 
 					<tr>
 						<td>Driver</td>
-						<td><a href="{{ route('dashboard.drivers.show', ['driver' => $car->driver->id]) }}">{{ $car->driver->full_name }}</a></td>
+						<td>
+						@if($car->driver)
+						<a href="{{ route('dashboard.drivers.show', ['driver' => $car->driver->id]) }}">{{ $car->driver->full_name }}</a>
+						@endif
+						</td>
+					</tr>
+
+						<tr>
+						<td>Owner</td>
+						<td><a href="{{ route('dashboard.carOwners.show', ['owner' => $car->owner->id]) }}">{{ $car->owner->full_name }}</a></td>
 					</tr>
 				
 					

@@ -14,4 +14,9 @@ class Car extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
