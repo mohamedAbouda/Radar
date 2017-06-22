@@ -91,7 +91,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     'uses' => 'Dashboard\UserController@storeAdmin'
 	]);
 
-	Route::post('owner/add/car', [
+	Route::get('owner/add/car', [
     'as' => 'admin.add.car.owner',
     'uses' => 'Dashboard\CarOwnerController@storeCar'
 	]);

@@ -22,7 +22,7 @@
 						<td>
 						<a href="{{ route('dashboard.carOwners.show', ['carOwner' => $carOwner->id]) }}" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> Show</a>
 	                        <a href="{{ route('dashboard.carOwners.edit', ['carOwner' => $carOwner->id]) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
-	                         <form action="{{ route('dashboard.admin.add.car.owner')}}" style="display: inline-block" method="post">
+	                         <form action="{{ route('dashboard.admin.add.car.owner')}}" style="display: inline-block" method="get">
 	                            {{ csrf_field() }}
 	                            <input type="hidden" name="id" value="{{$carOwner->id}}">
 	                            <button class="btn btn-primary btn-xs">Add Car</button>
