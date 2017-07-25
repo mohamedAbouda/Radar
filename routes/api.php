@@ -12,86 +12,63 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/register', [
-	'uses' => 'Apis\AuthController@register',
-]);
 
-Route::post('/login', [
-	'uses' => 'Apis\AuthController@login',
-]);
+//all auth api
+	Route::post('/auth/signup',[
 
-Route::post('/social/login', [
-	'uses' => 'Apis\AuthController@socialLogin',
-]);
-
-Route::get('/categories', [
-	'uses' => 'Apis\CategoryController@index',
-]);
-
-Route::get('/cousins', [
-	'uses' => 'Apis\CousinController@index',
-]);
-
-Route::group(['middleware'=>['JWT.auth']],function (){
-
-	Route::get('/cooks/profile',[
-		'uses'=>'Apis\CookController@show'
+		'uses'=>'Apis\AuthController@signUp'
 	]);
 
-	Route::post('/profile/edit',[
-		'uses'=>'Apis\AuthController@update'
+
+	Route::post('/auth/signin',[
+
+		'uses'=>'Apis\AuthController@signIn'
 	]);
 
-	Route::post('/location/update',[
-		'uses'=>'Apis\AuthController@updateLocation'
+	Route::post('/auth/social/signup',[
+
+		'uses'=>'Apis\AuthController@socialSignUp'
 	]);
 
-	Route::post('/promo',[
-		'uses'=>'Apis\AuthController@refer'
+	Route::post('/auth/social/signin',[
+
+		'uses'=>'Apis\AuthController@socialSignIn'
 	]);
 
-	Route::post('/invite',[
-		'uses'=>'Apis\AuthController@invite'
+	Route::post('/auth/forget/password',[
+
+		'uses'=>'Apis\AuthController@forgetPassword'
 	]);
 
-	Route::post('/password/reset',[
-		'uses'=>'Apis\AuthController@passwordReset'
-	]);
+	Route::group(['middleware'=>['JWT.auth']],function (){
 
-	Route::post('/recipe/create',[
-		'uses'=>'Apis\RecipeController@store'
-	]);
+	
+		Route::post('/auth/registration/id',[
 
-	Route::post('/recipe/edit',[
-		'uses'=>'Apis\RecipeController@update'
-	]);
+			'uses'=>'Apis\AuthController@registrationId'
+		]);
 
-	Route::post('/recipe/delete',[
-		'uses'=>'Apis\RecipeController@destroy'
-	]);
 
-	Route::post('/recipe/view',[
-		'uses'=>'Apis\RecipeController@show'
-	]);
+		Route::post('/set/car/registration/code',[
 
-	Route::post('/details/create',[
-		'uses'=>'Apis\AuthController@moreDetails'
-	]);
+			'uses'=>'Apis\CarController@setRegistrationCode'
+		]);
 
-	Route::post('/category/recipes',[
-		'uses'=>'Apis\CategoryController@show'
-	]);
+		Route::post('/submit/radar',[
 
-	Route::post('/search/recipes',[
-		'uses'=>'Apis\RecipeController@search'
-	]);
+			'uses'=>'Apis\RadarController@SubmitRadar'
+		]);
 
-	Route::post('/order/create',[
-		'uses'=>'Apis\OrderController@store'
-	]);
+		Route::post('/nearby/radars',[
 
-	Route::post('/order/update',[
-		'uses'=>'Apis\OrderController@update'
-	]);
+			'uses'=>'Apis\RadarController@nearbyRadars'
+		]);
+
+		Route::post('/get/radar',[
+
+			'uses'=>'Apis\RadarController@getRadar'
+		]);
+
+
 });
 

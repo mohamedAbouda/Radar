@@ -28,6 +28,13 @@ Redis::publish('test-channel',json_encode($data));
 return view('welcomeSocket');
 });
 
+//verfiy the User
+Route::get('register/verify/{confirmationCode}', [
+    'as' => 'confirmation_path',
+    'uses' => 'Apis\AuthController@confirm'
+]);
+
+
 
 
 //Route::get('/', 'HomeController@index');

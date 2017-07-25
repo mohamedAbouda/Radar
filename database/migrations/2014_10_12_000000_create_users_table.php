@@ -24,7 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('social_id');
             $table->integer('account_type');
             $table->integer('is_on_duty');
-            $table->integer('confirmed');
+            $table->string('confirmation');
+            $table->integer('confirmation_code');
             $table->integer('activated');
             $table->rememberToken();
             $table->timestamps();

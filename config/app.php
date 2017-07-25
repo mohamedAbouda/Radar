@@ -172,6 +172,7 @@ return [
         Spatie\Fractal\FractalServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Toin0u\Geotools\GeotoolsServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,6 +236,7 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
+        'Geotools' => Toin0u\Geotools\Facade\Geotools::class,
 
     ],
 

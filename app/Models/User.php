@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'full_name', 'email', 'password', 'phone_number', 'profile_pic', 
 
-       'social_type', 'social_id', 'account_type','is_on_duty','confirmed','activated'
+       'social_type', 'social_id', 'account_type','is_on_duty','confirmed','activated','confirmation_code'
     ];
 
     /**
@@ -38,5 +38,15 @@ class User extends Authenticatable
     public function car()
     {
         return $this->hasOne('App\Models\Car','driver_id');
+    }
+
+       public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function registeration_id()
+    {
+        return $this->hasMany('App\Models\DeviceId');
     }
 }
