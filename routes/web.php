@@ -110,4 +110,5 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
         return view('dashboard.map' , compact('parameters'));
     })->name('location.simpleMap');
     Route::resource('radar','Dashboard\RadarController');
+    Route::resource('locations','Dashboard\LocationController');
 });
