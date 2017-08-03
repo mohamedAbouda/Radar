@@ -8,7 +8,7 @@ use DB;
 class Location extends Model
 {
     protected $table = 'locations';
-    protected $fillable = ['latitude','longitude','bearing','speed'];
+    protected $fillable = ['latitude','longitude','bearing','speed','type'];
 
       public function getByDistance($lat, $lng, $distance)
     {

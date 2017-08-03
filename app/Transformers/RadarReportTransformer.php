@@ -24,6 +24,4 @@ class RadarReportTransformer extends TransformerAbstract
 		return $data;
 	}
 
-
-
 }

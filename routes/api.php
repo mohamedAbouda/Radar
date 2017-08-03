@@ -59,9 +59,19 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\RadarController@SubmitRadar'
 		]);
 
+		Route::post('/submit/lagna',[
+
+			'uses'=>'Apis\LagnaController@SubmitLagna'
+		]);
+
 		Route::post('/nearby/radars',[
 
 			'uses'=>'Apis\RadarController@nearbyRadars'
+		]);
+
+		Route::post('/nearby/lagnas',[
+
+			'uses'=>'Apis\LagnaController@nearbyLagnas'
 		]);
 
 		Route::post('/get/radar',[

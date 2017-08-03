@@ -4,24 +4,22 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Lagna;
+use App\Models\LagnaReport;
 use App\Models\Location;
-use App\Models\Radar;
-use App\Models\RadarReport;
-use App\Transformers\RadarTransformer;
+use App\Transformers\LagnaTransformer;
 use League\Geotools\Coordinate\Ellipsoid;
 use Toin0u\Geotools\Facade\Geotools;
 
-class RadarController extends Controller
+class LagnaController extends Controller
 {
-
-
-    public function SubmitRadar(Request $request)
+    public function SubmitLagna(Request $request)
     {
-        $radius = 5;
+    	$radius = 5;
         $data = $request->all();
-        $data['type'] = 'Radar';
+         $data['type'] = 'Lagna';
 
-        $locations = Location::where('type','Radar')->all();;
+        $locations = Location::where('type','Lagna')->get();
         foreach ($locations as $location) {
             $coordA   = Geotools::coordinate([$location->latitude,$location->longitude]);
             $coordB   = Geotools::coordinate([$data['latitude'],$data['longitude']]);
@@ -30,13 +28,12 @@ class RadarController extends Controller
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
                 $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                //$locationCount = 
                 $updateLocation = Location::where('id',$location->id)->update([
                     'latitude'=>$newLatLng['lat'],
                     'longitude'=>$newLatLng['lng'],
                     ]);
-                $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
-                $radarReport = RadarReport::create($data);
+                $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
+                $LagnaReport = LagnaReport::create($data);
 
                 return response()->json([
                     'message'=>'You have upated and merged the latitude and longitude.',
@@ -50,24 +47,21 @@ class RadarController extends Controller
 
         $data['location_id'] = $createLocation->id;
         $data['radius'] = 5;
-        $createRadar = Radar::create($data);
+        $createLagna = Lagna::create($data);
 
-        $data['radar_id'] = $createRadar->id;
-        $createRadarReport = RadarReport::create($data);
+        $data['lagna_id'] = $createLagna->id;
+        $createLagnaReport = LagnaReport::create($data);
 
 
 
 
 
         return response()->json([
-            'message'=>'You have submited the radar.',
+            'message'=>'You have submited the Lagna.',
             ],200 );
     }
 
-
-  
-
-    public function nearbyRadars(Request $request)
+    public function nearbyLagnas(Request $request)
     {
         $radius = 20;
         $data = $request->all();
@@ -78,38 +72,16 @@ class RadarController extends Controller
         foreach ($addresses as $address) {
             $addressId[] = $address->id;
         }
-        $radars = Radar::whereHas('location',function ($query) use($addressId) {
+        $lagnas = Lagna::whereHas('location',function ($query) use($addressId) {
             $query->whereIn('id',$addressId);
         })->get();
 
-
         return response()->json([
             'data'=>fractal()
-            ->collection($radars)
-            ->transformWith(new RadarTransformer)
+            ->collection($lagnas)
+            ->transformWith(new LagnaTransformer)
             ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
             ],200);
-    }
-
-    public function getRadar(Request $request)
-    {
-        $id = $request->input('radar_id');
-
-        $radar = Radar::where('id',$id)->first();
-
-        if($radar){
-            return response()->json([
-                'data'=>fractal()
-                ->item($radar)
-                ->transformWith(new RadarTransformer)
-                ->serializeWith(new \Spatie\Fractal\ArraySerializer())
-                ->toArray(),
-                ],200);
-        }else{
-            return response()->json([
-                'message'=>'No Radar with this id.',
-                ],400 );
-        }
     }
 }
