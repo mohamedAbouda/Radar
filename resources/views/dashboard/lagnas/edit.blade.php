@@ -1,36 +1,18 @@
 @extends('dashboard.app')
-@section('title','Edit a location')
+@section('title','Edit a radar')
 @section('description','')
 @section('content')
 <div class="col-md-12">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ Form::open(['route' => ['dashboard.locations.update',$resource->id],'method'=>'PATCH']) }}
+            {{ Form::open(['route' => ['dashboard.radar.update',$resource->id],'method'=>'PATCH']) }}
             <div class="col-md-12" style="margin-bottom:20px;">
                 <div id="map">
                 </div>
-                <input type="hidden" name="latitude" value="{{ $resource ? $resource->latitude : NULL }}">
-                <input type="hidden" name="longitude" value="{{ $resource ? $resource->longitude : NULL }}">
+                <input type="hidden" name="latitude" value="{{ $resource->location ? $resource->location->latitude : NULL }}">
+                <input type="hidden" name="longitude" value="{{ $resource->location ? $resource->location->longitude : NULL }}">
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="bearing">
-                        BEARING
-                    </label>
-                    {{ Form::number('bearing' , $resource->bearing , ['id' => 'bearing' , 'class' => 'form-control' , 'min' => 0]) }}
-                </div>
-                <div class="form-group">
-                    <label for="speed">
-                        SPEED
-                    </label>
-                    {{ Form::number('speed' , $resource->speed , ['id' => 'speed' , 'class' => 'form-control' , 'min' => 0]) }}
-                </div>
-                <div class="form-group">
-                    <label for="type">
-                        TYPE
-                    </label>
-                    {{ Form::select('type' , ['lagna' => 'Lagna' , 'radar' => 'Radar'] , $resource->type , ['id' => 'type' , 'class' => 'form-control']) }}
-                </div>
                 <div class="form-group">
                     <button class="btn btn-primary">Save</button>
                 </div>
@@ -69,8 +51,8 @@ function deleteMarkers() {
 
 function initMap() {
     var uluru = {
-        lat: {{ $resource->latitude }},
-        lng: {{ $resource->longitude }}
+        lat: {{ $resource->location->latitude }},
+        lng: {{ $resource->location->longitude }}
     };
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 20,

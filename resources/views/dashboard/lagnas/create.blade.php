@@ -1,36 +1,18 @@
 @extends('dashboard.app')
-@section('title','Edit a location')
+@section('title','Create a radar')
 @section('description','')
 @section('content')
 <div class="col-md-12">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ Form::open(['route' => ['dashboard.locations.update',$resource->id],'method'=>'PATCH']) }}
+            {{ Form::open(['route' => 'dashboard.radar.store']) }}
             <div class="col-md-12" style="margin-bottom:20px;">
                 <div id="map">
                 </div>
-                <input type="hidden" name="latitude" value="{{ $resource ? $resource->latitude : NULL }}">
-                <input type="hidden" name="longitude" value="{{ $resource ? $resource->longitude : NULL }}">
+                <input type="hidden" name="latitude" value="">
+                <input type="hidden" name="longitude" value="">
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="bearing">
-                        BEARING
-                    </label>
-                    {{ Form::number('bearing' , $resource->bearing , ['id' => 'bearing' , 'class' => 'form-control' , 'min' => 0]) }}
-                </div>
-                <div class="form-group">
-                    <label for="speed">
-                        SPEED
-                    </label>
-                    {{ Form::number('speed' , $resource->speed , ['id' => 'speed' , 'class' => 'form-control' , 'min' => 0]) }}
-                </div>
-                <div class="form-group">
-                    <label for="type">
-                        TYPE
-                    </label>
-                    {{ Form::select('type' , ['lagna' => 'Lagna' , 'radar' => 'Radar'] , $resource->type , ['id' => 'type' , 'class' => 'form-control']) }}
-                </div>
                 <div class="form-group">
                     <button class="btn btn-primary">Save</button>
                 </div>
@@ -68,12 +50,9 @@ function deleteMarkers() {
 }
 
 function initMap() {
-    var uluru = {
-        lat: {{ $resource->latitude }},
-        lng: {{ $resource->longitude }}
-    };
+    var uluru = {lat: -25.363, lng: 131.044};
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 20,
+        zoom: 4,
         center: uluru
     });
     addMarker(uluru);
@@ -83,7 +62,7 @@ function initMap() {
         addMarker(point);
         $('input[name=latitude]').val(event.latLng.lat());
         $('input[name=longitude]').val(event.latLng.lng());
-        console.log("Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng());
+        // console.log("Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng());
     });
 }
 </script>
