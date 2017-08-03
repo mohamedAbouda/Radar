@@ -1,63 +1,39 @@
 @extends('dashboard.app')
-@section('title',"{$car->model}")
-@section('description','Car Data')
+@section('title',"Radar details")
 @section('content')
 <div class="col-md-12">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-		</div>
+		<!-- <div class="panel-heading">
+		</div> -->
 		<div class="panel-body">
+			<div class="">
+				<iframe width="100%" height="500px" frameborder="0" style="border:0" src="http://maps.google.com/maps?q={{ $resource->location->latitude.','.$resource->location->longitude }}&z=16&output=embed">
+		        </iframe>
+			</div>
 			<table class="table table-bordered">
 				<thead>
-					<th>Name</th>
-					<th>Data</th>
+					<th>#</th>
+					<th>REPORTS</th>
 				</thead>
 				<tbody>
+					@foreach($reports as $report)
 					<tr>
-						<td>Model</td>
-						<td>{{ $car->model }}</td>
-					</tr>
-					<tr>
-						<td>Plate Number</td>
-						<td>{{ $car->plate_number }}</td>
-					</tr>
-
-					<tr>
-						<td>Maintenance Date</td>
-						<td>{{ $car->maintenance_date }}</td>
-					</tr>
-
-					<tr>
-						<td>Mile Age</td>
-						<td>{{ $car->mile_age }}</td>
-					</tr>
-
-					<tr>
-						<td>Registration Code</td>
-						<td>{{ $car->registration_code }}</td>
-					</tr>
-
-					<tr>
-						<td>Driver</td>
 						<td>
-						@if($car->driver)
-						<a href="{{ route('dashboard.drivers.show', ['driver' => $car->driver->id]) }}">{{ $car->driver->full_name }}</a>
-						@endif
+							{{ $counter_offset + $loop->iteration }}
+						</td>
+						<td>
+							<p>
+								{{ $report->note }}
+							</p>
 						</td>
 					</tr>
-
-						<tr>
-						<td>Owner</td>
-						<td><a href="{{ route('dashboard.carOwners.show', ['owner' => $car->owner->id]) }}">{{ $car->owner->full_name }}</a></td>
-					</tr>
-				
-					
+					@endforeach
 				</tbody>
 			</table>
 		</div>
 		<div class="panel-footer">
 			<div class="text-center">
-                
+				{{ $reports->links() }}
             </div>
 		</div>
 	</div>

@@ -54,9 +54,13 @@ class RadarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Radar $radar)
     {
-        //
+        $index = request()->get('page',1);
+        $data['resource'] = $radar;
+        $data['reports'] = $radar->reports()->paginate(30);
+        $data['counter_offset'] = $index * 30 - 30;
+        return view('dashboard.radars.show',$data);
     }
 
     /**
