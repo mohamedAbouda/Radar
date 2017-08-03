@@ -36,12 +36,12 @@
               <img class="hidden-md-down" src="{{asset('img/logo-2.png')}}" alt="">
               <img class="hidden-lg-up" src="{{asset('img/logo-2-mob.png')}}" alt="">
           </a>
-  
+
           <span id="show-hide-sidebar" class="checkbox-toggle">
               <input type="checkbox" id="show-hide-sidebar-toggle" checked>
               <label for="show-hide-sidebar-toggle"></label>
           </span>
-  
+
           <button class="hamburger hamburger--htla">
               <span>toggle menu</span>
           </button>
@@ -100,7 +100,7 @@
                               </div>
                           </div>
                       </div>
-  
+
                       <div class="dropdown dropdown-notification messages">
                           <a href="#"
                              class="header-alarm dropdown-toggle active"
@@ -188,28 +188,28 @@
                               </div>
                           </div>
                       </div>
-  
-                 
+
+
                       <div class="dropdown user-menu">
                           <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{Auth::user()->full_name}} <img src="img/avatar-2-64.png" alt="">
                           </button>
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                           
-                            
+
+
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="{{url('/logout')}}"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                           </div>
                       </div>
-  
+
                       <button type="button" class="burger-right">
                           <i class="font-icon-menu-addl"></i>
                       </button>
                   </div><!--.site-header-shown-->
-  
+
                   <div class="mobile-menu-right-overlay"></div>
                   <div class="site-header-collapsed">
-                      
+
                   </div><!--.site-header-collapsed-->
               </div><!--site-header-content-in-->
           </div><!--.site-header-content-->
@@ -219,7 +219,7 @@
   <div class="mobile-menu-left-overlay"></div>
   <nav class="side-menu">
       <ul class="side-menu-list">
-         
+
           <li class="brown with-sub">
               <span>
                   <i class="fa fa-user-secret"></i>
@@ -228,7 +228,7 @@
               <ul>
                   <li><a href="{{route('dashboard.admin.create.admin')}}"><span class="lbl">Add </span></a></li>
                   <li><a href="{{route('dashboard.admins.all')}}"><span class="lbl">All Admins</span></a></li>
-                 
+
               </ul>
           </li>
 
@@ -241,7 +241,7 @@
               <ul>
                   <li><a href="{{route('dashboard.drivers.create')}}"><span class="lbl">Add </span></a></li>
                   <li><a href="{{route('dashboard.drivers.index')}}"><span class="lbl">All Drivers</span></a></li>
-                 
+
               </ul>
           </li>
 
@@ -253,7 +253,7 @@
               <ul>
                   <li><a href="{{route('dashboard.carOwners.create')}}"><span class="lbl">Add </span></a></li>
                   <li><a href="{{route('dashboard.carOwners.index')}}"><span class="lbl">All Car Owners</span></a></li>
-                 
+
               </ul>
           </li>
 
@@ -263,16 +263,51 @@
                   <span class="lbl">Cars</span>
               </span>
               <ul>
-                 
+
                   <li><a href="{{route('dashboard.cars.index')}}"><span class="lbl">All Cars</span></a></li>
-                 
+
               </ul>
           </li>
-        
-         
+
+          <li class="brown with-sub">
+              <span>
+                  <i class="fa fa-map"></i>
+                  <span class="lbl">Radars</span>
+              </span>
+              <ul>
+                  <li>
+                      <a href="{{ route('dashboard.radar.index') }}">
+                          <span class="lbl">All Radars</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('dashboard.radar.create') }}">
+                          <span class="lbl">Add new</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li class="brown with-sub">
+              <span>
+                  <i class="fa fa-map"></i>
+                  <span class="lbl">Locations</span>
+              </span>
+              <ul>
+                  <li>
+                      <a href="{{ route('dashboard.locations.index') }}">
+                          <span class="lbl">All locations</span>
+                      </a>
+                  </li>
+                  <!-- <li>
+                      <a href="{{ route('dashboard.locations.create') }}">
+                          <span class="lbl">Add new</span>
+                      </a>
+                  </li> -->
+              </ul>
+          </li>
       </ul>
-  
-    
+
+
   </nav><!--.side-menu-->
 
   <div class="page-content">
@@ -287,7 +322,7 @@
             @yield('content')
   </div><!--.page-content-->
 
-  
+
 
   <script src="{{asset('js/lib/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('js/lib/tether/tether.min.js')}}"></script>

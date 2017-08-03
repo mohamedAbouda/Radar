@@ -103,4 +103,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     'uses' => 'Dashboard\CarOwnerController@storeCar'
 	]);
 
+    Route::resource('lagna','Dashboard\LagnaController');
+
+    Route::get('location/map/{lat?}/{lng?}', function($lat , $lng) {
+        $parameters = "$lat,$lng";
+        return view('dashboard.map' , compact('parameters'));
+    })->name('location.simpleMap');
+    Route::resource('radar','Dashboard\RadarController');
+    Route::resource('locations','Dashboard\LocationController');
 });

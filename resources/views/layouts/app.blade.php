@@ -11,8 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('/') }}/css/app.css" rel="stylesheet">
-
+    {{ Html::style('css/app.css') }}
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -82,6 +81,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('/') }}/js/app.js"></script>
+    {{ Html::script('js/app.js') }}
 </body>
 </html>
