@@ -43,6 +43,7 @@ class RadarController extends Controller
         $input = $request->all();
         $input['bearing'] = 0;
         $input['speed'] = 0;
+        $input['type'] = 'lagna';
         $location = Location::create($input);
         $radar = Radar::create(['location_id' => $location->id , 'radius' => 5.00]);
         return redirect()->back()->with(['success' => 'Radar created successfulley']);

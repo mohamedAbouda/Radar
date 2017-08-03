@@ -12,6 +12,7 @@
 						<th>LATITUDE-LONGITUDE</th>
 						<th>BEARING</th>
 						<th>SPEED</th>
+						<th>TYPE</th>
 						<th style="padding: 0px;">
 							<div style="margin:10px;" class="pull-left">OPTIONS</div>
 							<!-- <a href="{{ route('dashboard.locations.create') }}" class="btn btn-primary pull-right" target="_blank" style="margin-top: 3px;">
@@ -35,6 +36,9 @@
 							</td>
 							<td>
 								{{ $resource->speed }}
+							</td>
+							<td>
+								{{ $resource->type }}
 							</td>
 							<td>
 								<!-- <a href="{{ route('dashboard.locations.show', $resource->id) }}" class="btn btn-info pull-left" style="margin-right:5px;"><i class="fa fa-eye"></i></a> -->
