@@ -305,9 +305,20 @@
                   </li> -->
               </ul>
           </li>
+          <li class="brown with-sub">
+              <span>
+                  <i class="fa fa-map"></i>
+                  <span class="lbl">Lagnas</span>
+              </span>
+              <ul>
+                  <li>
+                      <a href="{{ route('dashboard.lagnas.index') }}">
+                          <span class="lbl">All lagnas</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
       </ul>
-
-
   </nav><!--.side-menu-->
 
   <div class="page-content">
