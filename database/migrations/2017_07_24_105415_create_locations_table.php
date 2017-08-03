@@ -15,8 +15,8 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('latitude', 10, 8)->default(0);
-            $table->decimal('longitude', 11, 8)->default(0);
+            $table->decimal('latitude', 18, 15)->default(0);
+            $table->decimal('longitude', 18, 15)->default(0);
             $table->float('bearing');
             $table->integer('speed');
             $table->timestamps();
