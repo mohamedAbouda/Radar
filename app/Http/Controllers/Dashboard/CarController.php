@@ -38,7 +38,7 @@ class CarController extends Controller
     {
         $data = $request->all();
 
-        $data['registration_code'] = str_random(13);
+        $data['registration_code'] = str_random(5);
 
         $createCar = Car::create($data);
 

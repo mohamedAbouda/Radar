@@ -21,7 +21,7 @@ class RadarController extends Controller
         $data = $request->all();
         $data['type'] = 'Radar';
 
-        $locations = Location::where('type','Radar')->all();;
+        $locations = Location::where('type','Radar')->get();
         foreach ($locations as $location) {
             $coordA   = Geotools::coordinate([$location->latitude,$location->longitude]);
             $coordB   = Geotools::coordinate([$data['latitude'],$data['longitude']]);
@@ -30,10 +30,11 @@ class RadarController extends Controller
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
                 $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                //$locationCount = 
+                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
                 $updateLocation = Location::where('id',$location->id)->update([
                     'latitude'=>$newLatLng['lat'],
                     'longitude'=>$newLatLng['lng'],
+                    'merge_count'=>$locationCount+1,
                     ]);
                 $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
                 $radarReport = RadarReport::create($data);

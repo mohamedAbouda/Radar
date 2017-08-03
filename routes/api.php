@@ -79,6 +79,11 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\RadarController@getRadar'
 		]);
 
+		Route::post('/update/driver/location',[
+
+			'uses'=>'Apis\DriverController@updateDriverLocation'
+		]);
+
 
 });
 

@@ -21,6 +21,9 @@ class CreateLocationsTable extends Migration
             $table->integer('speed');
             $table->string('type');
             $table->integer('merge_count')->defualt(0);
+            $table->integer('car_id')->unsigned()->nullable();
+            $table->foreign('car_id')->references('id')->on('cars')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -28,9 +28,11 @@ class LagnaController extends Controller
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
                 $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
+                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
                 $updateLocation = Location::where('id',$location->id)->update([
                     'latitude'=>$newLatLng['lat'],
                     'longitude'=>$newLatLng['lng'],
+                    'merge_count'=>$locationCount+1,
                     ]);
                 $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
                 $LagnaReport = LagnaReport::create($data);
