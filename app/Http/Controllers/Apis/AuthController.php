@@ -30,7 +30,7 @@ class AuthController extends Controller
     $data['confirmation_code'] = $confirmation_code;
 
     $saveUser = User::create($data);
-dd($data,$saveUser);
+// dd($data,$saveUser);
     $authUser=User::where('email','=',$request->input('email'))->first();
     $token=JWTauth::fromUser($authUser,[
       'exp' => Carbon::now()->addMonth()->timestamp,
