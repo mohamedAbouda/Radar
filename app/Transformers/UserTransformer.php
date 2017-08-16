@@ -9,29 +9,29 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-	
+
 
 
 	public function transform(User $user)
 	{
-		if ($user->account_type == 0) {
-			$account_type = 'Driver';
-		}elseif ($user->account_type == 1) {
-			$account_type = 'Car Owner';
-		}elseif ($user->account_type == 2) {
-			$account_type = 'Partner';
-		}else{
-			$account_type = 'Undefiend';
-		}
-		
+		// if ($user->account_type == 0) {
+		// 	$account_type = 'Driver';
+		// }elseif ($user->account_type == 1) {
+		// 	$account_type = 'Car Owner';
+		// }elseif ($user->account_type == 2) {
+		// 	$account_type = 'Partner';
+		// }else{
+		// 	$account_type = 'Undefiend';
+		// }
+
 		$data = [
 			'id'=>$user->id,
 			'full_name'=>$user->full_name,
 			'email'=>$user->email,
 			'phone_number'=>$user->phone_number,
-			'account_type'=>$account_type,
+			'account_type'=>$user->account_type,
 		];
-		
+
 		return $data;
 	}
 

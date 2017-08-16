@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('account_type');
             $table->integer('is_on_duty');
             $table->string('confirmation');
-            $table->integer('confirmation_code');
+            $table->string('confirmation_code');
             $table->integer('confirmed')->default(0);
             $table->integer('activated');
             $table->rememberToken();
