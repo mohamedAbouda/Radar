@@ -30,6 +30,8 @@ class UserTransformer extends TransformerAbstract
 			'email'=>$user->email,
 			'phone_number'=>$user->phone_number,
 			'account_type'=>$user->account_type,
+			'profile_pic'=>$user->profile_pic,
+			'is_on_duty'=>$user->is_on_duty,
 		];
 
 		return $data;

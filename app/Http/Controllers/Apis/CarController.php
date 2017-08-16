@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Transformers\CarTransformer;
 use App\Models\Car;
 
 class CarController extends Controller
@@ -32,5 +33,62 @@ class CarController extends Controller
       			'message'=>'No registration code submited',
       		],400 );
     	}
+    }
+
+    public function viewCarDetails(Request $request)
+    {
+        $carId = $request->input('car_id');
+        if($carId){
+            $car = Car::where('id',$carId)->first();
+            if($car){
+                return response()->json([
+                    'data'=>fractal()
+                    ->item($car)
+                    ->transformWith(new CarTransformer)
+                    ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+                    ->toArray(),
+                ],200);
+            }else{
+               return response()->json([
+                    'message'=>'No Car has been found with this id.',
+                ],400); 
+            }
+        }else{
+            return response()->json([
+                'message'=>'No Car id has submited.',
+            ],400 );
+        }
+    }
+
+    public function viewAllCars(Request $request)
+    {
+        $cars = Car::all();
+
+         return response()->json([
+            'data'=>fractal()
+            ->collection($cars)
+            ->transformWith(new CarTransformer)
+            ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+            ->toArray(),
+        ],200);
+    }
+
+    public function updateCarDetails(Request $request)
+    {
+        $id = $request->input('car_id');
+        $data = $request->all();
+        if($id){
+            $update = Car::findOrFail($id);
+            $update->update($data);
+
+            return response()->json([
+                'message'=>'The car details has been updated.',
+            ],200 );
+
+        }else{
+            return response()->json([
+                'message'=>'No Car id has submited.',
+            ],400 );
+        }
     }
 }

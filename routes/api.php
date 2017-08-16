@@ -53,10 +53,55 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\UserController@viewProfile'
 		]);
 
+		Route::post('/create/group',[
+
+			'uses'=>'Apis\GroupController@createGroup'
+		]);
+
+		Route::post('/view/groups',[
+
+			'uses'=>'Apis\GroupController@viewGroups'
+		]);
+
+		Route::post('/view/group/users',[
+
+			'uses'=>'Apis\GroupController@viewUsersGroup'
+		]);
+
+		Route::post('/group/add/user',[
+
+			'uses'=>'Apis\GroupController@groupAddUser'
+		]);
+
+		Route::post('/auth/edit/profile',[
+
+			'uses'=>'Apis\UserController@editProfile'
+		]);
+
+		Route::post('/auth/change/password',[
+
+			'uses'=>'Apis\UserController@changePassword'
+		]);
+
 
 		Route::post('/set/car/registration/code',[
 
 			'uses'=>'Apis\CarController@setRegistrationCode'
+		]);
+
+		Route::post('/view/car/details',[
+
+			'uses'=>'Apis\CarController@viewCarDetails'
+		]);
+
+		Route::post('/view/all/cars',[
+
+			'uses'=>'Apis\CarController@viewAllCars'
+		]);
+
+		Route::post('/update/car/details',[
+
+			'uses'=>'Apis\CarController@updateCarDetails'
 		]);
 
 		Route::post('/submit/radar',[

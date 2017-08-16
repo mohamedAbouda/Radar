@@ -20,6 +20,10 @@ class CreateCarsTable extends Migration
             $table->string('maintenance_date');
             $table->string('mile_age');
             $table->string('registration_code');
+            $table->string('oil_change_date');
+            $table->string('tyre_replacement_date');
+            $table->string('oil_change_mileage');
+
             $table->integer('driver_id')->unsigned()->nullable();
             $table->foreign('driver_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');

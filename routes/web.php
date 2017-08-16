@@ -34,6 +34,12 @@ Route::get('register/verify/{confirmationCode}', [
     'uses' => 'Apis\AuthController@confirm'
 ]);
 
+//approve group request
+Route::get('group/request/verfiy/{confirmationCode}', [
+    'as' => 'accept_request',
+    'uses' => 'Apis\GroupController@confirm'
+]);
+
 
 
 
