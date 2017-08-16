@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\User;
 use App\Models\Location;
 
 class DriverController extends Controller
@@ -37,6 +38,29 @@ class DriverController extends Controller
 		}else{
 			return response()->json([
 				'message'=>'There is no car or driver with inputs.',
+				],404 );
+		}
+	}
+
+	public function changeDutyStatus(Request $request)
+	{
+		$checkStatus = User::where('id',$request->user()->id)->pluck('is_on_duty')->first();
+
+		if($checkStatus == 0){
+			$setDutyOn = User::where('id',$request->user()->id)->update([
+				'is_on_duty'=>1,
+			]);
+
+			return response()->json([
+				'message'=>'Now You are on Duty.','status'=>1
+				],404 );
+		}else{
+			$setDutyOff = User::where('id',$request->user()->id)->update([
+				'is_on_duty'=>0,
+			]);
+
+			return response()->json([
+				'message'=>'Now You are off Duty.','status'=>0
 				],404 );
 		}
 	}

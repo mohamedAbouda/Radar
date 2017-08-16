@@ -48,6 +48,11 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\AuthController@registrationId'
 		]);
 
+		Route::post('/auth/view/profile',[
+
+			'uses'=>'Apis\UserController@viewProfile'
+		]);
+
 
 		Route::post('/set/car/registration/code',[
 
@@ -82,6 +87,12 @@ use Illuminate\Http\Request;
 		Route::post('/update/driver/location',[
 
 			'uses'=>'Apis\DriverController@updateDriverLocation'
+		]);
+
+
+		Route::post('/change/duty/driver',[
+
+			'uses'=>'Apis\DriverController@changeDutyStatus'
 		]);
 
 
