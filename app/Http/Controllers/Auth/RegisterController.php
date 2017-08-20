@@ -67,7 +67,7 @@ class RegisterController extends Controller
         $user = User::create([
             'full_name' => $data['firstname'].' '.$data['lastname'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => $data['password'] //mutator at the model app\Models\User
         ]);
 
         if ($user->id == 1) {
