@@ -26,7 +26,7 @@ class CarController extends Controller
     		}else{
 	    		return response()->json([
 	      			'message'=>'No car for this code',
-	      		],400 );	
+	      		],400 );
     		}
     	}else{
     		return response()->json([
@@ -38,6 +38,7 @@ class CarController extends Controller
     public function viewCarDetails(Request $request)
     {
         $carId = $request->input('car_id');
+        $registration_code = $request->input('registration_code');
         if($carId){
             $car = Car::where('id',$carId)->first();
             if($car){
@@ -51,7 +52,22 @@ class CarController extends Controller
             }else{
                return response()->json([
                     'message'=>'No Car has been found with this id.',
-                ],400); 
+                ],400);
+            }
+        }elseif($registration_code){
+            $car = Car::where('registration_code',$registration_code)->first();
+            if($car){
+                return response()->json([
+                    'data'=>fractal()
+                    ->item($car)
+                    ->transformWith(new CarTransformer)
+                    ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+                    ->toArray(),
+                ],200);
+            }else{
+               return response()->json([
+                    'message'=>'No Car has been found with this id.',
+                ],400);
             }
         }else{
             return response()->json([

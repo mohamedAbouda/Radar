@@ -28,7 +28,7 @@ class LagnaController extends Controller
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
                 $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
+                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first();
                 $updateLocation = Location::where('id',$location->id)->update([
                     'latitude'=>$newLatLng['lat'],
                     'longitude'=>$newLatLng['lng'],
@@ -41,7 +41,7 @@ class LagnaController extends Controller
                     'message'=>'You have upated and merged the latitude and longitude.',
                     ],200 );
                 }
-               
+
 
             }
         }
@@ -85,5 +85,26 @@ class LagnaController extends Controller
             ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
             ],200);
+    }
+
+    public function show(Request $request)
+    {
+        $id = $request->input('lagna_id');
+
+        $lagna = Lagna::where('id',$id)->first();
+
+        if($lagna){
+            return response()->json([
+                'data'=>fractal()
+                ->item($lagna)
+                ->transformWith(new LagnaTransformer)
+                ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+                ->toArray(),
+                ],200);
+        }else{
+            return response()->json([
+                'message'=>'No Lagna with this id.',
+                ],400 );
+        }
     }
 }
