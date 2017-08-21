@@ -323,6 +323,16 @@
                 <li><a href="{{route('dashboard.towtrucks.create')}}"><span class="lbl">Add new</span></a></li>
             </ul>
         </li>
+        <li class="brown">
+            <a href="{{ route('dashboard.accidents.index') }}">
+                <span>
+                    <i class="fa fa-car"></i>
+                    <span class="lbl">
+                        Accidents
+                    </span>
+                </span>
+            </a>
+        </li>
     </ul>
 </nav><!--.side-menu-->
 

@@ -122,4 +122,5 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('lagnas','Dashboard\LagnaController');
 
     Route::resource('towtrucks','Dashboard\TowTruckController');
+    Route::resource('accidents','Dashboard\AccedentController');
 });
