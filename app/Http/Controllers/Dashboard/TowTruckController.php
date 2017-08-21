@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Request\Dashboard\TowTruckCreateRequest;
+use App\Http\Request\Dashboard\TowTruckUpdateRequest;
 use App\Models\TowTruck;
 
 class TowTruckController extends Controller
@@ -23,7 +25,7 @@ class TowTruckController extends Controller
         return view($this->view.'create');
     }
 
-    public function store(Request $request)
+    public function store(TowTruckCreateRequest $request)
     {
         if (TowTruck::create($request->all())) {
             return redirect()->back()->with('success' , 'Added successfully');
@@ -37,7 +39,7 @@ class TowTruckController extends Controller
         return view($this->view.'.edit' , $data);
     }
 
-    public function update(Request $request,TowTruck $towtruck)
+    public function update(TowTruckUpdateRequest $request,TowTruck $towtruck)
     {
         $input = $request->all();
         if ($towtruck->update($input)) {
