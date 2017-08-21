@@ -120,4 +120,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::patch('lagnas/reports/{report}/edit' , 'Dashboard\LagnaController@updateReport')->name('lagnas.reports.update');
     Route::delete('lagnas/reports/{report}/delete' , 'Dashboard\LagnaController@destroyReport')->name('lagnas.reports.destroy');
     Route::resource('lagnas','Dashboard\LagnaController');
+
+    Route::resource('towtrucks','Dashboard\TowTruckController');
 });
