@@ -333,6 +333,16 @@
                 </span>
             </a>
         </li>
+        <li class="brown">
+            <a href="{{ route('dashboard.helprequests.index') }}">
+                <span>
+                    <i class="fa fa-envelope"></i>
+                    <span class="lbl">
+                        Help requests
+                    </span>
+                </span>
+            </a>
+        </li>
     </ul>
 </nav><!--.side-menu-->
 
