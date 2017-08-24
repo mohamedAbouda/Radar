@@ -281,6 +281,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('dashboard.radar.allOnMap') }}">
+                        <span class="lbl">All on map</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('dashboard.radar.create') }}">
                         <span class="lbl">Add new</span>
                     </a>

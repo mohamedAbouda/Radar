@@ -113,6 +113,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
         $parameters = "$lat,$lng";
         return view('dashboard.map' , compact('parameters'));
     })->name('location.simpleMap');
+
+    Route::get('radars/all/map','Dashboard\RadarController@allOnMap')->name('radar.allOnMap');
     Route::resource('radar','Dashboard\RadarController');
     Route::resource('locations','Dashboard\LocationController');
 
