@@ -26,7 +26,7 @@ class GroupController extends Controller
 		$createGroup = Group::create($data);
 
 		return response()->json([
-			'id' => $createGroup->id
+			'id' => $createGroup->id,
 			'message'=>'The group has been created.',
 			],200 );
 	}
