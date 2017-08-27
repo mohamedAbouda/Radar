@@ -143,5 +143,5 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\DriverController@changeDutyStatus'
 		]);
 
-
+		Route::post('/users/search' , 'Apis\UserController@search')->name('users.search');
 });

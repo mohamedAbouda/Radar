@@ -30,7 +30,7 @@ class UserController extends Controller
 			->transformWith(new UserTransformer)
 			->serializeWith(new \Spatie\Fractal\ArraySerializer())
 			->toArray(),
-			],200);
+		],200);
 	}
 
 	public function editProfile(UpdateProfile $request)
@@ -47,7 +47,7 @@ class UserController extends Controller
 
 		return response()->json([
 			'message'=>'You have updated your profile data.',
-			],200 );
+		],200 );
 	}
 
 	public function changePassword(ChangePasswordRequest $request)
@@ -58,33 +58,48 @@ class UserController extends Controller
 		if(!empty($authUser->social_id) && empty($authUser->password)){
 			return response()->json([
 				'error'=>'You are logged in with Social media account',
-				]);
+			]);
 		}
 		else{
 			if( Hash::check( $oldPassword,$authUser->password)){
 				$update=User::where('id','=',$authUser->id)->update([
 					'password'=>bcrypt($newPassword),
-					]);
+				]);
 
 				if($update){
 
 					return response()->json([
 						'success'=>'Your Password has been Updated',
-						]);
+					]);
 				}
 				else{
 					return response()->json([
 						'error'=>'an error occurred while you Updating your password',
-						]);
+					]);
 				}
 			}
 			else{
 				return response()->json([
 					'error'=>'the old Password in incorrect',
-					]);
+				]);
 
 			}
 
-		} 
+		}
+	}
+
+	public function search(Request $request)
+	{
+		$search = $request->get('name');
+		$users = User::where('full_name' , 'LIKE' , '%'.$search.'%')
+		->where('confirmed',1)->get();
+		return response()->json([
+			'data'=>fractal()
+			->collection($users)
+			->transformWith(new UserTransformer)
+			->serializeWith(new \Spatie\Fractal\ArraySerializer())
+			->toArray(),
+		]
+		,200);
 	}
 }
