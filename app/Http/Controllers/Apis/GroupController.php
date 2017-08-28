@@ -102,7 +102,7 @@ class GroupController extends Controller
 
 		$groupIds = GroupUser::where('user_id',$userId)->where('confirmed',1)->pluck('group_id')->toArray();
 
-		$groups = Group::whereIn('id',$groupIds)->get();
+		$groups = Group::whereIn('id',$groupIds)->orWhere('admin_id',$userId)->get();
 
 		return response()->json([
 			'data'=>fractal()
