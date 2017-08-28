@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
 
@@ -106,5 +107,52 @@ class CarController extends Controller
                 'message'=>'No Car id has submited.',
             ],400 );
         }
+    }
+
+    public function panic(Request $request)
+    {
+        $id = $request->get('driver_id');
+        $car = Car::where('driver_id',$id)->first();
+        if (!$car) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Car not found.',
+            ],404);
+        }
+        $owner = $car->owner;
+        if (!$owner) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Car owener not found or deleted.',
+            ],404);
+        }
+        //change car's state
+        $car->state = 1;
+        $car->save();
+        //notify owner
+        $title = 'There is a problem';
+        $body = 'A serious problem !';
+        $data = [];
+        $token = $owner->registeration_id()->first();
+        try {
+            if ($token) {
+                $pusher = new PusherController($title, $body, $data, $token->device_id);
+                $pusher->send();
+            }else{
+                return response()->json([
+                    'statusCode' => 500,
+                    'message' => 'Notification wasn\'t sent please try again.',
+                ],500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'statusCode' => 500,
+                'message' => 'Something went wrong.',
+            ],500);
+        }
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Success.',
+        ],200);
     }
 }

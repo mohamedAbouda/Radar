@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d96593b51f6c0f9ee4fe152856df4c3c",
+    "content-hash": "dda4270564d319a28e32702e26f60ea5",
     "packages": [
         {
             "name": "brozot/laravel-fcm",
