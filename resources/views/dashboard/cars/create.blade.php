@@ -32,7 +32,7 @@
                         <label for="#">Car Maintenance Date</label>
                       
                         <input name="maintenance_date" class="form-control" value="{{old('maintenance_date')}}">
-                        **EX: 2002/2/23
+                        **EX: 4/1/2001 or 12/12/2001 
                     </div>
                 </div>
 

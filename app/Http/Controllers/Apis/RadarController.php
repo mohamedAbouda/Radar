@@ -29,21 +29,33 @@ class RadarController extends Controller
             if($distance->in('km')->haversine() <= $radius){
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
-                $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
-                $updateLocation = Location::where('id',$location->id)->update([
-                    'latitude'=>$newLatLng['lat'],
-                    'longitude'=>$newLatLng['lng'],
-                    'merge_count'=>$locationCount+1,
-                    ]);
-                $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
-                $radarReport = RadarReport::create($data);
+                    if($location->latitude == $data['latitude'] && $location->longitude == $data['longitude']){
 
-                return response()->json([
-                    'message'=>'You have upated and merged the latitude and longitude.',
-                    ],200 );
+                        $data['location_id'] = $location->id;
+                        $data['radius'] = 5;
+
+                        $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
+
+                        $createRadarReport = RadarReport::create($data);
+                        return response()->json([
+                            'message'=>'you have submit your Radar Report.',
+                            ],200 );
+                    }
+                    $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
+                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
+                    $updateLocation = Location::where('id',$location->id)->update([
+                        'latitude'=>$newLatLng['lat'],
+                        'longitude'=>$newLatLng['lng'],
+                        'merge_count'=>$locationCount+1,
+                        ]);
+                    $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
+                    $radarReport = RadarReport::create($data);
+
+                    return response()->json([
+                        'message'=>'You have upated and merged the latitude and longitude.',
+                        ],200 );
                 }
-               
+
 
             }
         }
@@ -66,7 +78,7 @@ class RadarController extends Controller
     }
 
 
-  
+
 
     public function nearbyRadars(Request $request)
     {
