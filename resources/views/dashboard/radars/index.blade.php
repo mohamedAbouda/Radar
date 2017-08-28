@@ -25,9 +25,13 @@
                                 {{ $counter_offset + $loop->iteration }}
                             </td>
 							<td>
+							@if($resource->location)
 								<a href="{{ route('dashboard.location.simpleMap', [$resource->location->latitude,$resource->location->longitude]) }}" target="_blank">
 									view on map
 								</a>
+								@else
+								Can't Find Location.
+								@endif
 							</td>
 							<td>
 								<a href="{{ route('dashboard.radar.show', $resource->id) }}" class="btn btn-info pull-left" style="margin-right:5px;"><i class="fa fa-eye"></i></a>

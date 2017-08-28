@@ -15,9 +15,9 @@ class LagnaController extends Controller
 {
     public function SubmitLagna(Request $request)
     {
-    	$radius = 5;
+        $radius = 5;
         $data = $request->all();
-         $data['type'] = 'Lagna';
+        $data['type'] = 'Lagna';
 
         $locations = Location::where('type','Lagna')->get();
         foreach ($locations as $location) {
@@ -27,21 +27,33 @@ class LagnaController extends Controller
             if($distance->in('km')->haversine() <= $radius){
                 $checkBearing = $this->checkBearing($location->bearing,$data['bearing']);
                 if($checkBearing == 'merge'){
-                $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
-                $updateLocation = Location::where('id',$location->id)->update([
-                    'latitude'=>$newLatLng['lat'],
-                    'longitude'=>$newLatLng['lng'],
-                    'merge_count'=>$locationCount+1,
-                    ]);
-                $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
-                $LagnaReport = LagnaReport::create($data);
+                    if($location->latitude == $data['latitude'] && $location->longitude == $data['longitude']){
 
-                return response()->json([
-                    'message'=>'You have upated and merged the latitude and longitude.',
-                    ],200 );
+                        $data['location_id'] = $location->id;
+                        $data['radius'] = 5;
+
+                        $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
+
+                        $createLagnaReport = LagnaReport::create($data);
+                        return response()->json([
+                            'message'=>'you have submit your Lagna Report.',
+                            ],200 );
+                    }
+                    $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
+                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
+                    $updateLocation = Location::where('id',$location->id)->update([
+                        'latitude'=>$newLatLng['lat'],
+                        'longitude'=>$newLatLng['lng'],
+                        'merge_count'=>$locationCount+1,
+                        ]);
+                    $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
+                    $LagnaReport = LagnaReport::create($data);
+
+                    return response()->json([
+                        'message'=>'You have upated and merged the latitude and longitude.',
+                        ],200 );
                 }
-               
+
 
             }
         }

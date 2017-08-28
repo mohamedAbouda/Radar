@@ -330,6 +330,7 @@
             @include('dashboard.error')
             @include('dashboard.info')
             @include('dashboard.success')
+             @include('dashboard.errorSession')
             @yield('content')
   </div><!--.page-content-->
 

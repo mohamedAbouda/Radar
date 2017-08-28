@@ -9,8 +9,8 @@
             <div class="col-md-12" style="margin-bottom:20px;">
                 <div id="map">
                 </div>
-                <input type="hidden" name="latitude" value="">
-                <input type="hidden" name="longitude" value="">
+                <input type="hidden" required name="latitude" value="">
+                <input type="hidden" required name="longitude" value="">
             </div>
             <div class="col-md-12">
                 <div class="form-group">

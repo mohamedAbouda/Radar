@@ -27,7 +27,7 @@ class CreateCarRequest extends FormRequest
             'model'=>'required',
             'plate_number'=>'required',
             'maintenance_date'=>'required',
-            'mile_age'=>'required',
+            'mile_age'=>'required|numeric',
 
 
         ];
