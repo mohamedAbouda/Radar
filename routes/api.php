@@ -144,5 +144,5 @@ use Illuminate\Http\Request;
 		]);
 
 		Route::post('/users/search' , 'Apis\UserController@search')->name('users.search');
+		Route::post('panic','Apis\CarController@panic')->name('panic');
 });
-Route::post('panic','Apis\CarController@panic')->name('panic');
