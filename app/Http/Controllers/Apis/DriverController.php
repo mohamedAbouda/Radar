@@ -53,7 +53,7 @@ class DriverController extends Controller
 
 			return response()->json([
 				'message'=>'Now You are on Duty.','status'=>1
-				],404 );
+				]);
 		}else{
 			$setDutyOff = User::where('id',$request->user()->id)->update([
 				'is_on_duty'=>0,
@@ -61,7 +61,7 @@ class DriverController extends Controller
 
 			return response()->json([
 				'message'=>'Now You are off Duty.','status'=>0
-				],404 );
+				]);
 		}
 	}
 }

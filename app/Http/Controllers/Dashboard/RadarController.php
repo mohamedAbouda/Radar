@@ -22,6 +22,15 @@ class RadarController extends Controller
         return view('dashboard.radars.index',$data);
     }
 
+    public function allOnMap()
+    {
+        $data['resources'] = Radar::get();
+        if (!$data['resources']) {
+            return redirect()->back()->withErrors('error','There are no radars.');
+        }
+        return view('dashboard.radars.map',$data);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

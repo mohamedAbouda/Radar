@@ -10,7 +10,7 @@
         "spatie/laravel-fractal": "^2.0",
         "zizaco/entrust": "^1.7",
         "tymon/jwt-auth": "0.5.*",
-        "brozot/laravel-fcm": "^1.2.0",
+        "brozot/laravel-fcm": "^1.2",
         "league/csv": "^8.1",
         "predis/predis": "^1.1",
         "toin0u/geotools-laravel": "~1.0",

@@ -42,7 +42,7 @@ use Illuminate\Http\Request;
 
 	Route::group(['middleware'=>['JWT.auth']],function (){
 
-	
+
 		Route::post('/auth/registration/id',[
 
 			'uses'=>'Apis\AuthController@registrationId'
@@ -128,6 +128,9 @@ use Illuminate\Http\Request;
 
 			'uses'=>'Apis\RadarController@getRadar'
 		]);
+		Route::post('/get/lagna',[
+			'uses'=>'Apis\LagnaController@show'
+		]);
 
 		Route::post('/update/driver/location',[
 
@@ -140,6 +143,6 @@ use Illuminate\Http\Request;
 			'uses'=>'Apis\DriverController@changeDutyStatus'
 		]);
 
-
+		Route::post('/users/search' , 'Apis\UserController@search')->name('users.search');
+		Route::post('panic','Apis\CarController@panic')->name('panic');
 });
-

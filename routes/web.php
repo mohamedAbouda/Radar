@@ -113,6 +113,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
         $parameters = "$lat,$lng";
         return view('dashboard.map' , compact('parameters'));
     })->name('location.simpleMap');
+
+    Route::get('radars/all/map','Dashboard\RadarController@allOnMap')->name('radar.allOnMap');
     Route::resource('radar','Dashboard\RadarController');
     Route::resource('locations','Dashboard\LocationController');
 
@@ -120,4 +122,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::patch('lagnas/reports/{report}/edit' , 'Dashboard\LagnaController@updateReport')->name('lagnas.reports.update');
     Route::delete('lagnas/reports/{report}/delete' , 'Dashboard\LagnaController@destroyReport')->name('lagnas.reports.destroy');
     Route::resource('lagnas','Dashboard\LagnaController');
+
+    Route::resource('towtrucks','Dashboard\TowTruckController');
+    Route::resource('accidents','Dashboard\AccedentController');
+    Route::resource('helprequests','Dashboard\HelpRequestController');
 });

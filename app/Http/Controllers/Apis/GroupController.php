@@ -26,6 +26,7 @@ class GroupController extends Controller
 		$createGroup = Group::create($data);
 
 		return response()->json([
+			'id' => $createGroup->id,
 			'message'=>'The group has been created.',
 			],200 );
 	}
@@ -101,7 +102,7 @@ class GroupController extends Controller
 
 		$groupIds = GroupUser::where('user_id',$userId)->where('confirmed',1)->pluck('group_id')->toArray();
 
-		$groups = Group::whereIn('id',$groupIds)->get();
+		$groups = Group::whereIn('id',$groupIds)->orWhere('admin_id',$userId)->get();
 
 		return response()->json([
 			'data'=>fractal()
@@ -133,7 +134,7 @@ class GroupController extends Controller
 			}else{
 				return response()->json([
 					'message'=>'No group with this id.',
-					],400 );	
+					],400 );
 			}
 		}else{
 			return response()->json([
