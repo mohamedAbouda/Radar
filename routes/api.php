@@ -147,5 +147,6 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 	Route::post('panic','Apis\CarController@panic')->name('panic');
 	Route::post('call/help','Apis\HelpRequestController@store')->name('helprequest.callForHelp');
 	Route::post('answer/help','Apis\HelpRequestController@answer')->name('helprequest.answerHelp');
+	Route::post('nearby/help','Apis\HelpRequestController@nearby')->name('helprequest.nearby');
 	Route::get('towtrucks','Apis\TowTruckController@index')->name('towtrucks.index');
 });

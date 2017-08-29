@@ -8,25 +8,26 @@ use App\Http\Controllers\PusherController;
 use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
 use App\Models\HelpRequest;
+use App\Transformers\HelpRequestTransformer;
 
 class HelpRequestController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(HelpRequestCreateRequest $request)
     {
         $input = $request->all();
@@ -57,10 +58,10 @@ class HelpRequestController extends Controller
     }
 
     /**
-     * Answer help request
-     * @param  Request $request
-     * @return Json response
-     */
+    * Answer help request
+    * @param  Request $request
+    * @return Json response
+    */
     public function answer(Request $request)
     {
         $id = $request->get('id');
@@ -97,5 +98,29 @@ class HelpRequestController extends Controller
             'statusCode' => 200,
             'message' => 'Help request answered successfully.'
         ]);
+    }
+
+    public function nearby(Request $request)
+    {
+        $radius = 20;
+        $data = $request->all();
+        $location = new Location;
+        $addresses = $location->getByDistance($data['latitude'],$data['longitude'],$radius);
+        $addressId = array();
+        foreach ($addresses as $address) {
+            $addressId[] = $address->id;
+        }
+
+        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId) {
+            $query->whereIn('id',$addressId);
+        })->get();
+
+        return response()->json([
+            'data'=>fractal()
+            ->collection($helprequests)
+            ->transformWith(new HelpRequestTransformer)
+            ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+            ->toArray(),
+        ],200);
     }
 }

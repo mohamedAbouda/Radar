@@ -69,7 +69,7 @@ class LagnaController extends Controller
         return view('dashboard.lagnas.show',$data);
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -82,7 +82,7 @@ class LagnaController extends Controller
         $data['resource'] = $lagna;
         return view('dashboard.lagnas.edit',$data);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -96,7 +96,7 @@ class LagnaController extends Controller
         // dd($location);
         return redirect()->back()->with(['success' => 'Lagna updated successfulley']);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -106,7 +106,10 @@ class LagnaController extends Controller
     public function destroy(Lagna $lagna)
     {
         $location = $lagna->location;
-        $location->delete();
+        $lagna->delete();
+        if ($location) {
+            $location->delete();
+        }
         return redirect()->back()->with(['success' => 'Deleted successfully']);
     }
 

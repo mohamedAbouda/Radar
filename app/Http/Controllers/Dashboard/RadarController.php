@@ -113,7 +113,10 @@ class RadarController extends Controller
     public function destroy(Radar $radar)
     {
         $location = $radar->location;
-        $location->delete();
+        $radar->delete();
+        if ($location) {
+            $location->delete();
+        }
         return redirect()->back()->with(['success' => 'Deleted successfully']);
     }
 }
