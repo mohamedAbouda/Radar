@@ -24,11 +24,9 @@ class TowTruckUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            return [
-                'name' => 'required',
-                'phone' => 'required',
-                'pic' => 'nullable|image'
-            ];
+            'name' => 'required',
+            'phone' => 'required',
+            'pic' => 'nullable|image'
         ];
     }
 }
