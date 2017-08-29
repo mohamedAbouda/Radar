@@ -30,9 +30,9 @@ class AccedentController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function destroy(Accedent $accedent)
+    public function destroy(Accedent $accident)
     {
-        $accedent->delete();
+        $accident->delete();
         return redirect()->back()->with('success' , 'Deleted successfully');
     }
 }
