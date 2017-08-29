@@ -149,3 +149,4 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 	Route::post('answer/help','Apis\HelpRequestController@answer')->name('helprequest.answerHelp');
 	Route::get('towtrucks','Apis\TowTruckController@index')->name('towtrucks.index');
 });
+Route::post('nearby/help','Apis\HelpRequestController@nearby')->name('helprequest.nearby');
