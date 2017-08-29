@@ -4,21 +4,21 @@ var Redis = require('ioredis');
 var notificationclient = new Redis();
 var notifications = new Redis();
 
-notificationclient.subscribe('test-channel');
-notificationclient.on('message',function (channel,notification){
-	var data=JSON.parse(notification);
-	data.dataType='notification';
-	io.sockets.emit('order:' +data.order_id,data);
-	console.log(notification);
+notificationclient.subscribe('location-channel');
+notificationclient.on('message',function (channel,location){
+	var data=JSON.parse(location);
+	data.dataType='location';
+	io.sockets.emit('location:' +data.driver_id,data);
+	console.log(location);
 });
 
-notifications.subscribe('notifications');
+/*notifications.subscribe('notifications');
 notifications.on('message',function (channel,notification){
 	var data=JSON.parse(notification);
 	//data.dataType='notification';
 	io.sockets.emit('user',data);
 	console.log(notification);
-});
+});*/
 server.listen(3000,function(){
-	console.log('notification server is running');
+	console.log('location server is running');
 });
