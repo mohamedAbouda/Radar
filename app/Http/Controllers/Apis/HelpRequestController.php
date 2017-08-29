@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PusherController;
 use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
 use App\Models\HelpRequest;
@@ -56,36 +57,45 @@ class HelpRequestController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Answer help request
+     * @param  Request $request
+     * @return Json response
      */
-    public function show($id)
+    public function answer(Request $request)
     {
-        //
-    }
+        $id = $request->get('id');
+        $helprequest = HelpRequest::find($id);
+        if (!$helprequest) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Help-request not found!'
+            ],404);
+        }
+        $helprequest->is_accepted = 1;
+        $helprequest->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $driver = $helprequest->deriver;
+        if ($driver) {
+            $title = 'Help is on the way';
+            $body = 'Hang on there !';
+            $data = [];
+            $token = $driver->registeration_id()->first();
+            try {
+                if ($token) {
+                    $pusher = new PusherController($title, $body, $data, $token->device_id);
+                    $pusher->send();
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'statusCode' => 500,
+                    'message' => 'Something went wrong.',
+                ],500);
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Help request answered successfully.'
+        ]);
     }
 }
