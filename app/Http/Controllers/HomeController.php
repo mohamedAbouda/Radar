@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Src\notifier;
+use App\Models\Car;
+use App\Models\Location;
 
 
 class HomeController extends Controller
@@ -37,6 +39,17 @@ class HomeController extends Controller
     }
     public function updateLocation()
     {
-         $update =$this->notifier->updateLocationSocket(1,1236.556,5.65965,365,120);
+       return  $update =$this->notifier->updateLocationSocket(1,1236.556,5.65965,365,120);
+    }
+    public function listenLocation()
+    {
+        return view('dashboard.listen');
+    }
+
+    public function getLocation($id)
+    {
+        $carId = Car::where('driver_id',$id)->pluck('id')->first();
+        $location = Location::where('car_id',$carId)->first();
+         return response()->json($location);
     }
 }
