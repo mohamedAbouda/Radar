@@ -23,18 +23,20 @@
                                 {{ $counter_offset + $loop->iteration }}
                             </td>
 
-                            <th>
+                            <td>
                                 {{ $resource->driver ? $resource->driver->full_name : '[deleted]' }}
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 {{ $resource->car ? $resource->car->model.'-'.$resource->car->plate_number : '[deleted]' }}
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 {{ $resource->reporter ? $resource->reporter->full_name : '[deleted]' }}
-                            </th>
-                            <th>
-                                {{ $resource->location ? $resource->location->latitude.'-'.$resource->location->longitude : '[deleted]' }}
-                            </th>
+                            </td>
+                            <td>
+                                <a href="{{ route('dashboard.location.simpleMap', [$resource->location->latitude,$resource->location->longitude]) }}" target="_blank">
+                                    {{ $resource->location ? $resource->location->latitude.'-'.$resource->location->longitude : '[deleted]' }}
+                                </a>
+                            </td>
 
                             <td>
                                 {{ Form::open(['route' => ['dashboard.accidents.destroy' , $resource->id] , 'method' => 'DELETE']) }}

@@ -14,7 +14,7 @@
 						<th>NOTES</th>
 						<th style="padding: 0px;">
 							<div style="margin:10px;" class="pull-left">OPTIONS</div>
-							<!-- <a href="{{ route('dashboard.locations.create') }}" class="btn btn-primary pull-right" target="_blank" style="margin-top: 3px;">
+							<!-- <a href="{{ route('dashboard.helprequests.create') }}" class="btn btn-primary pull-right" target="_blank" style="margin-top: 3px;">
 								Add new
 							</a> -->
 						</th>
@@ -49,8 +49,8 @@
 
 							<td>
 								<!-- <a href="{{ route('dashboard.locations.show', $resource->id) }}" class="btn btn-info pull-left" style="margin-right:5px;"><i class="fa fa-eye"></i></a> -->
-								<a href="{{ route('dashboard.locations.edit', $resource->id) }}" class="btn btn-primary pull-left" style="margin-right:5px;"><i class="fa fa-edit"></i></a>
-								{{ Form::open(['route' => ['dashboard.locations.destroy', $resource->id] , 'method' => 'DELETE']) }}
+								<a href="{{ route('dashboard.helprequests.edit', $resource->id) }}" class="btn btn-primary pull-left" style="margin-right:5px;"><i class="fa fa-edit"></i></a>
+								{{ Form::open(['route' => ['dashboard.helprequests.destroy', $resource->id] , 'method' => 'DELETE']) }}
 									<button class="btn btn-danger pull-left" type="submit"><i class="fa fa-trash"></i></button>
 								{{ Form::close() }}
 							</td>
