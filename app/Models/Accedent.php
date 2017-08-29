@@ -14,18 +14,18 @@ class Accedent extends Model
      */
     public function driver()
     {
-        $this->belongsTo(User::class,'driver_id');
+        return $this->belongsTo(User::class,'driver_id');
     }
     public function reporter()
     {
-        $this->belongsTo(User::class,'reporter_id');
+        return $this->belongsTo(User::class,'reporter_id');
     }
     public function car()
     {
-        $this->belongsTo(Car::class,'car_id');
+        return $this->belongsTo(Car::class,'car_id');
     }
     public function location()
     {
-        $this->belongsTo(Location::class,'location_id');
+        return $this->belongsTo(Location::class,'location_id');
     }
 }
