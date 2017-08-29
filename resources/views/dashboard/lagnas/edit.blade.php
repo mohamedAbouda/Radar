@@ -1,5 +1,5 @@
 @extends('dashboard.app')
-@section('title','Edit a radar')
+@section('title','Edit a Lagna')
 @section('description','')
 @section('content')
 <div class="col-md-12">

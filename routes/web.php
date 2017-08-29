@@ -28,6 +28,8 @@ Redis::publish('test-channel',json_encode($data));
 return view('welcomeSocket');
 });
 
+Route::get('socket', 'HomeController@updateLocation');
+
 //verfiy the User
 Route::get('register/verify/{confirmationCode}', [
     'as' => 'confirmation_path',
