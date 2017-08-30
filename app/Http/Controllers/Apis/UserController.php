@@ -33,7 +33,7 @@ class UserController extends Controller
 		],200);
 	}
 
-	public function editProfile(UpdateProfile $request)
+	public function editProfile(Request $request)
 	{
 		$data = $request->all();
 		$authUser = $request->user();
