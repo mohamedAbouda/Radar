@@ -122,6 +122,7 @@ class GroupController extends Controller
 			$checkgroup = Group::where('id',$id)->first();
 			if($checkgroup){
 				$groupUsersIds = GroupUser::where('group_id',$id)->whereNotIn('user_id',[$authUser])->where('confirmed',1)->pluck('user_id')->toArray();
+				$groupUsersIds[] = $authUser;
 				$users = User::whereIn('id',$groupUsersIds)->get();
 
 				return response()->json([
