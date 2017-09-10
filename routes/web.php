@@ -30,6 +30,10 @@ return view('welcomeSocket');
 
 Route::get('socket', 'HomeController@updateLocation');
 
+Route::get('listen/{id}', 'HomeController@listenLocation');
+
+Route::get('location/{id}', 'HomeController@getLocation');
+
 //verfiy the User
 Route::get('register/verify/{confirmationCode}', [
     'as' => 'confirmation_path',

@@ -2,6 +2,7 @@
 namespace App\Src;
 use Auth;
 use App\Models\Location;
+use App\Models\Car;
 use Illuminate\Support\Facades\Redis;
 
 
@@ -14,7 +15,20 @@ before $insert->save(); add this $insert->section(); and add to the notification
 */	
 public function updateLocationSocket($driver_id,$lat,$lng,$bearing,$speed){
 
+	$carId = Car::where('driver_id',$driver_id)->pluck('id')->first();
+
+	$updateLocation = Location::where('car_id',$carId)->update([
+
+		'latitude'=>$lat,
+		'latitude'=>$lng,
+		'bearing'=>$bearing,
+		'speed'=>$speed,
+	]);
+
+	$id = Location::where('car_id',$carId)->pluck('id')->first();
+
   Redis::publish('location-channel',json_encode([
+  	'id'=>$id,
     'driver_id'=>$driver_id,
     'lat'=>$lat,
     'lng'=>$lng,
