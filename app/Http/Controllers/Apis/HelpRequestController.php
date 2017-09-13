@@ -8,6 +8,7 @@ use App\Http\Controllers\PusherController;
 use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
 use App\Models\Accedent;
+use App\Models\TowTruck;
 use App\Models\HelpRequest;
 use App\Transformers\HelpRequestTransformer;
 
@@ -144,10 +145,11 @@ class HelpRequestController extends Controller
         $input['location_id'] = $location->id;
 
         if (Accedent::create($input)) {
-            return response()->json([
-                'statusCode' => 200,
-                'message' => 'Accident reported successfully.'
-            ]);
+            $trucks = TowTruck::get();
+            return response()->json(fractal()
+            ->collection($trucks)
+            ->transformWith(new TowTruckTransformer)
+            ->toArray(),200);
         }
         return response()->json([
             'statusCode' => 500,
