@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PusherController;
 use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
+use App\Models\Accedent;
 use App\Models\HelpRequest;
 use App\Transformers\HelpRequestTransformer;
 
@@ -122,5 +123,35 @@ class HelpRequestController extends Controller
             ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
         ],200);
+    }
+
+    public function accident(Request $request)
+    {
+        $input = $request->all();
+        if (!$request->user()) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Driver not found!'
+            ],404);
+        }
+        $input['driver_id'] = $request->user()->id;
+
+        $location = Location::create([
+            'latitude' => $input['latitude'],
+            'longitude' => $input['longitude'],
+        ]);
+
+        $input['location_id'] = $location->id;
+
+        if (Accedent::create($input)) {
+            return response()->json([
+                'statusCode' => 200,
+                'message' => 'Accident reported successfully.'
+            ]);
+        }
+        return response()->json([
+            'statusCode' => 500,
+            'message' => 'Something went wrong.'
+        ],500);
     }
 }
