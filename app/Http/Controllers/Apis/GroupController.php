@@ -144,4 +144,28 @@ class GroupController extends Controller
 		}
 
 	}
+
+	public function leave(Request $request,Group $group)
+	{
+		$user = $request->user();
+		if ($group->admin_id === $user->id) {
+			$new_admin = $group->users()->first();
+			$group->admin_id = $new_admin->id;
+			$group->save();
+
+			$member = GroupUser::where('group_id',$group->id)->where('user_id',$new_admin->id)->first();
+			if ($member) {
+				$member->delete();
+			}
+		}else{
+			$member = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->first();
+			if ($member) {
+				$member->delete();
+			}
+		}
+		return response()->json([
+			'status' => 'success',
+			'message' => 'User removed successfully.'
+		]);
+	}
 }

@@ -73,6 +73,10 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 		'uses'=>'Apis\GroupController@groupAddUser'
 	]);
 
+	Route::post('/group/leave/{group}',[
+		'uses'=>'Apis\GroupController@leave'
+	]);
+
 	Route::post('/auth/edit/profile',[
 
 		'uses'=>'Apis\UserController@editProfile'
