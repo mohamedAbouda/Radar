@@ -19,6 +19,7 @@ class NewsFeedController extends Controller
             'data'=>fractal()
             ->collection($news)
             ->transformWith(new NewsFeedTransformer)
+            ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
         ],200);
     }
