@@ -348,6 +348,17 @@
                 </span>
             </a>
         </li>
+
+        <li class="brown with-sub">
+            <span>
+                <i class="fa fa-book"></i>
+                <span class="lbl">News</span>
+            </span>
+            <ul>
+                <li><a href="{{route('dashboard.news.index')}}"><span class="lbl">All</span></a></li>
+                <li><a href="{{route('dashboard.news.create')}}"><span class="lbl">Add new</span></a></li>
+            </ul>
+        </li>
     </ul>
 </nav><!--.side-menu-->
 
