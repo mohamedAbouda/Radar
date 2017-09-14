@@ -135,7 +135,17 @@ class HelpRequestController extends Controller
                 'message' => 'Driver not found!'
             ],404);
         }
+
+        $car = Car::where('registeration_code',$input['code'])->first();
+        if (!$car) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Car not found!'
+            ],404);
+        }
+
         $input['driver_id'] = $request->user()->id;
+        $input['car_id'] = $car->id;
 
         $location = Location::create([
             'latitude' => $input['latitude'],
