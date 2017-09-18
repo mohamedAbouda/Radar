@@ -157,14 +157,14 @@ class GroupController extends Controller
 				$group->delete();
 			}
 
-			$member = GroupUser::where('group_id',$group->id)->where('user_id',$new_admin->id)->first();
-			if ($member) {
-				$member->delete();
+			$members = GroupUser::where('group_id',$group->id)->where('user_id',$new_admin->id)->get();
+			if ($members) {
+				$members->delete();
 			}
 		}else{
-			$member = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->first();
-			if ($member) {
-				$member->delete();
+			$members = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->get();
+			if ($members) {
+				$members->delete();
 			}
 		}
 		return response()->json([
