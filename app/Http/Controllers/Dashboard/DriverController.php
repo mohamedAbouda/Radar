@@ -12,7 +12,7 @@ use App\Http\Requests\Dashboard\UpdateDriverRequest;
 
 class DriverController extends Controller
 {
-    
+
     protected $mainRedirect = 'dashboard.drivers.';
 
     public function index()
@@ -55,7 +55,7 @@ class DriverController extends Controller
             $update = Car::where('registration_code',$request->input('car_id'))->update([
                 'driver_id'=>$user->id,
             ]);
-        
+
 
         return redirect()->route($this->mainRedirect . 'index');
 
@@ -96,12 +96,12 @@ class DriverController extends Controller
      */
     public function update(UpdateDriverRequest $request, $id)
     {
-        
+
         $data = $request->all();
 
         $driver = User::findOrFail($id);
         if($request->input('password')){
-            $data['password'] =  bcrypt($data['password']);
+            $data['password'] =  $data['password']; //set as mutator in User.php
         }
 
         if($request->input('car_id')){
