@@ -29,17 +29,25 @@
 
 					<tr>
 						<td>Car</td>
-						<td><a href="{{ route('dashboard.cars.show', ['car' => $driver->car->id]) }}" >{{ $driver->car->model }}</a></td>
+						<td>
+							@if($driver->car)
+							<a href="{{ route('dashboard.cars.show', ['car' => $driver->car->id]) }}" >
+								{{ $driver->car->model }}
+							</a>
+							@else
+							<p class="text-danger">The driver has no car.</p>
+							@endif
+						</td>
 					</tr>
 
-				
-					
+
+
 				</tbody>
 			</table>
 		</div>
 		<div class="panel-footer">
 			<div class="text-center">
-                
+
             </div>
 		</div>
 	</div>
