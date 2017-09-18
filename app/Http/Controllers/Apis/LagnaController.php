@@ -35,21 +35,25 @@ class LagnaController extends Controller
 
                         $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
 
-                        $createLagnaReport = LagnaReport::create($data);
+                        if ((isset($data['note']) && $data['note']) || (isset($data['fine_cause']) && $data['fine_cause'])) {
+                            $createLagnaReport = LagnaReport::create($data);
+                        }
                         return response()->json([
                             'message'=>'you have submit your Lagna Report.',
                             ],200 );
                     }
                     $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
+                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first();
                     $updateLocation = Location::where('id',$location->id)->update([
                         'latitude'=>$newLatLng['lat'],
                         'longitude'=>$newLatLng['lng'],
                         'merge_count'=>$locationCount+1,
                         ]);
                     $data['lagna_id'] = Lagna::where('location_id',$location->id)->pluck('id')->first();
-                    $LagnaReport = LagnaReport::create($data);
 
+                    if ((isset($data['note']) && $data['note']) || (isset($data['fine_cause']) && $data['fine_cause'])) {
+                        $LagnaReport = LagnaReport::create($data);
+                    }
                     return response()->json([
                         'message'=>'You have upated and merged the latitude and longitude.',
                         ],200 );
@@ -64,13 +68,11 @@ class LagnaController extends Controller
         $data['location_id'] = $createLocation->id;
         $data['radius'] = 5;
         $createLagna = Lagna::create($data);
-
         $data['lagna_id'] = $createLagna->id;
-        $createLagnaReport = LagnaReport::create($data);
-
-
-
-
+        
+        if ((isset($data['note']) && $data['note']) || (isset($data['fine_cause']) && $data['fine_cause'])) {
+            $createLagnaReport = LagnaReport::create($data);
+        }
 
         return response()->json([
             'message'=>'You have submited the Lagna.',

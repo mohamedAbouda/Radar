@@ -12,19 +12,16 @@
 			</div>
 			<table class="table table-bordered">
 				<thead>
-					<th>#</th>
 					<th>REPORTS</th>
 				</thead>
 				<tbody>
 					@foreach($reports as $report)
+					@if(!$report->note)
+					<?php continue; ?>
+					@endif
 					<tr>
 						<td>
-							{{ $counter_offset + $loop->iteration }}
-						</td>
-						<td>
-							<p>
-								{{ $report->note }}
-							</p>
+							{{ $report->note }}
 						</td>
 					</tr>
 					@endforeach
