@@ -12,7 +12,6 @@
 			</div>
 			<table class="table table-bordered">
 				<thead>
-					<th>#</th>
 					<th>REPORTS</th>
 					<th>FINE</th>
 					<th>CAUSE</th>
@@ -20,10 +19,10 @@
 				</thead>
 				<tbody>
 					@foreach($reports as $report)
+					@if(!$report->note && !$report->fine_cause)
+					<?php continue; ?>
+					@endif
 					<tr>
-						<td>
-							{{ $counter_offset + $loop->iteration }}
-						</td>
 						<td>
 							@if(!$report->note)
 							<p class="text-danger">EMPTY</p>
