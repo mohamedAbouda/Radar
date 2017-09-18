@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Apis\UpdateProfile;
 use App\Http\Requests\Apis\ChangePasswordRequest;
-
+use Hash;
 
 class UserController extends Controller
 {
