@@ -40,7 +40,7 @@ class GroupController extends Controller
 
 			foreach ($request->input('users') as $user) {
 				$checkUser = User::where('id',$user)->first();
-				if($checkUser){
+				if($checkgroup->admin_id != $user && $checkUser){
 					$confirmation_code = str_random(30);
 					$groupUser = new GroupUser;
 					$groupUser->user_id = $checkUser->id;
