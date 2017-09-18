@@ -150,8 +150,12 @@ class GroupController extends Controller
 		$user = $request->user();
 		if ($group->admin_id === $user->id) {
 			$new_admin = $group->users()->first();
-			$group->admin_id = $new_admin->id;
-			$group->save();
+			if ($new_admin) {
+				$group->admin_id = $new_admin->id;
+				$group->save();
+			}else{
+				$group->delete();
+			}
 
 			$member = GroupUser::where('group_id',$group->id)->where('user_id',$new_admin->id)->first();
 			if ($member) {
