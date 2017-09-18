@@ -52,11 +52,14 @@ class GroupController extends Controller
 					'confirmation_code'=>$confirmation_code,
 					];
 
-					Mail::send('email.groupRequest', $mess, function ($message) use ($email,$confirmation_code)
-					{
-						$message->subject('Group Request Radar Application');
-						$message->to($email, $name=null);
-					});
+					try {
+						Mail::send('email.groupRequest', $mess, function ($message) use ($email,$confirmation_code)
+						{
+							$message->subject('Group Request Radar Application');
+							$message->to($email, $name=null);
+						});
+					} catch (\Exception $e) {
+					}
 				}
 			}
 
