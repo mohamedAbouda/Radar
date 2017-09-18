@@ -11,6 +11,7 @@ use App\Models\GroupUser;
 use App\Transformers\GroupTransformer;
 use App\Transformers\UserTransformer;
 use Mail;
+use DB;
 
 class GroupController extends Controller
 {
@@ -160,15 +161,13 @@ class GroupController extends Controller
 				$group->delete();
 			}
 
-			$member = GroupUser::where('group_id',$group->id)->where('user_id',$new_admin->id)->get();
-			if ($member) {
-				$member->delete();
-			}
+			DB::table('group_user')->where('group_id',$group->id)->where('user_id',$new_admin->id)->delete();
 		}else{
-			$member = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->get();
-			if ($member) {
-				$member->delete();
-			}
+			DB::table('group_user')->where('group_id',$group->id)->where('user_id',$user->id)->delete();
+			// $member = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->get();
+			// if ($member) {
+			// 	$member->delete();
+			// }
 		}
 		return response()->json([
 			'status' => 'success',
