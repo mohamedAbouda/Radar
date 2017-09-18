@@ -157,11 +157,10 @@ class GroupController extends Controller
 			if ($new_admin) {
 				$group->admin_id = $new_admin->id;
 				$group->save();
+				DB::table('group_user')->where('group_id',$group->id)->where('user_id',$new_admin->id)->delete();
 			}else{
 				$group->delete();
 			}
-
-			DB::table('group_user')->where('group_id',$group->id)->where('user_id',$new_admin->id)->delete();
 		}else{
 			DB::table('group_user')->where('group_id',$group->id)->where('user_id',$user->id)->delete();
 			// $member = GroupUser::where('group_id',$group->id)->where('user_id',$user->id)->get();
