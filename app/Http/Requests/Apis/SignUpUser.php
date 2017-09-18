@@ -27,7 +27,7 @@ class SignUpUser extends FormRequest
         return [
 
             'full_name'=>'required',
-            'phone_number'=>'required|numeric',
+            'phone_number'=>'required||regex:/^([\+0]([0-9]+[\- ]?)+)$/',
             'password'=>'required',
             'email'=>'required | unique:users,email',
 

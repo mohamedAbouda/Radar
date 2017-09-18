@@ -28,9 +28,9 @@ class socialRequest extends FormRequest
             'social_id'=>'required',
             'social_type'=>'required',
             'full_name'=>'required',
-            'email'=>'required|unique:users,email', 
-            'phone_number'=>'required|numeric',
-          
+            'email'=>'required|unique:users,email',
+            'phone_number'=>'required||regex:/^([\+0]([0-9]+[\- ]?)+)$/',
+
 
         ];
     }
