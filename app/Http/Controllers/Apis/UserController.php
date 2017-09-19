@@ -55,12 +55,11 @@ class UserController extends Controller
 		$newPassword=$request->input('new_password');
 		$oldPassword=$request->input('old_password');
 		$authUser=$request->user();
-		if(!empty($authUser->social_id) && empty($authUser->password)){
+		if($authUser->social_id){
 			return response()->json([
 				'error'=>'You are logged in with Social media account',
 			]);
-		}
-		else{
+		}else{
 			if( Hash::check( $oldPassword,$authUser->password)){
 				$update=User::where('id','=',$authUser->id)->update([
 					'password'=>bcrypt($newPassword),
