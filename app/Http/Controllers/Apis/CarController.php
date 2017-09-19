@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
+use DB;
 
 class CarController extends Controller
 {
@@ -14,9 +15,9 @@ class CarController extends Controller
     {
     	$carCode = $request->input('car_registration_code');
     	if($carCode){
-    		$checkCar = Car::where('registration_code',$carCode)->first();
+    		$checkCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->first();
     		if($checkCar){
-    			$updateCar = Car::where('registration_code',$carCode)->update([
+    			$updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
     				'driver_id'=>$request->user()->id,
     			]);
 
