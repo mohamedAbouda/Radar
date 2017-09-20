@@ -11,6 +11,7 @@ use App\Models\Accedent;
 use App\Models\TowTruck;
 use App\Models\TowTruckAccident;
 use App\Models\HelpRequest;
+use App\Models\Car;
 use App\Transformers\HelpRequestTransformer;
 
 class HelpRequestController extends Controller
