@@ -138,7 +138,7 @@ class HelpRequestController extends Controller
             ],404);
         }
 
-        $car = Car::where('registeration_code',$input['code'])->first();
+        $car = Car::where('registration_code',$input['code'])->first();
         if (!$car) {
             return response()->json([
                 'statusCode' => 404,
