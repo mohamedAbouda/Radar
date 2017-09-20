@@ -9,6 +9,7 @@ use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
 use App\Models\Accedent;
 use App\Models\TowTruck;
+use App\Models\TowTruckAccident;
 use App\Models\HelpRequest;
 use App\Transformers\HelpRequestTransformer;
 
@@ -155,7 +156,9 @@ class HelpRequestController extends Controller
         $input['location_id'] = $location->id;
 
         if (Accedent::create($input)) {
-            $trucks = TowTruck::get();
+            $occupied_trucks = TowTruckAccident::where('state',0)->pluck('tow_truck_id')
+            ->toArray();
+            $trucks = TowTruck::whereNotIn('id',$occupied_trucks)->get();
             return response()->json(fractal()
             ->collection($trucks)
             ->transformWith(new TowTruckTransformer)

@@ -37,4 +37,13 @@ class TowTruck extends Model
         $value->move(public_path($this->upload_distination),$image_name);
         $this->attributes['pic'] = $image_name;
     }
+
+    /**
+     * Relations
+     */
+    public function accidents()
+    {
+        return $this->hasMany(TowTruckAccident::class, 'tow_truck_id');
+        // return $this->belongsToMany(Accedent::class, 'tow_truck_accidents', 'tow_truck_id', 'accident_id');
+    }
 }
