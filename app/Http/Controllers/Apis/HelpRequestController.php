@@ -9,9 +9,11 @@ use App\Http\Requests\Apis\HelpRequestCreateRequest;
 use App\Models\Location;
 use App\Models\Accedent;
 use App\Models\TowTruck;
+use App\Models\GroupUser;
 use App\Models\TowTruckAccident;
 use App\Models\HelpRequest;
 use App\Models\Car;
+use App\Models\Group;
 use App\Transformers\TowTruckTransformer;
 use App\Transformers\HelpRequestTransformer;
 
@@ -107,6 +109,7 @@ class HelpRequestController extends Controller
 
     public function nearby(Request $request)
     {
+        $user = $request->user();
         $radius = 20;
         $data = $request->all();
         $location = new Location;
@@ -116,8 +119,16 @@ class HelpRequestController extends Controller
             $addressId[] = $address->id;
         }
 
-        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId) {
-            $query->whereIn('id',$addressId);
+        $member_groups_ids = GroupUser::where('user_id',$user->id)->where('confirmed',1)->groupBy('group_id')->pluck('group_id')->toArray();
+        $admin_groups_ids = Group::where('admin_id',$user->id)->pluck('id')->toArray();
+        $groups_ids = array_unique(array_merge($member_groups_ids, $admin_groups_ids));
+
+        $other_members_ids = GroupUser::whereIn('group_id',$groups_ids)->where('confirmed',1)->groupBy('user_id')->pluck('user_id')->toArray();
+        $other_admin_ids = Group::whereIn('id',$groups_ids)->groupBy('admin_id')->pluck('admin_id')->toArray();
+        $member_ids = array_unique(array_merge($other_admin_ids,$other_members_ids));
+
+        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids) {
+            $query->whereIn('id',$addressId)->whereIn('driver_id',$member_ids);
         })->get();
 
         return response()->json([
