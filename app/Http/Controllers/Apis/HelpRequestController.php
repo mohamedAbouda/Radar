@@ -157,14 +157,18 @@ class HelpRequestController extends Controller
 
         $input['location_id'] = $location->id;
 
-        if (Accedent::create($input)) {
+        if ($accident = Accedent::create($input)) {
             $occupied_trucks = TowTruckAccident::where('state',0)->pluck('tow_truck_id')
             ->toArray();
             $trucks = TowTruck::whereNotIn('id',$occupied_trucks)->get();
-            return response()->json(fractal()
-            ->collection($trucks)
-            ->transformWith(new TowTruckTransformer)
-            ->toArray(),200);
+            return response()->json([
+                'accident_id' => $accident->id,
+                'data' => fractal()
+                ->collection($trucks)
+                ->transformWith(new TowTruckTransformer)
+                ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+                ->toArray()
+            ],200);
         }
         return response()->json([
             'statusCode' => 500,
