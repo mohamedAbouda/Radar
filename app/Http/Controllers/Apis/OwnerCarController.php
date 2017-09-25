@@ -60,9 +60,12 @@ class OwnerCarController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function show($id)
+    public function show(Car $car)
     {
-        //
+        return response()->json(fractal()
+        ->item($car)
+        ->transformWith(new CarTransformer)
+        ->toArray(),200);
     }
 
     /**

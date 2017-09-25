@@ -38,9 +38,9 @@ class CarOwnerController extends Controller
      */
     public function store(CreateDriverRequest $request)
     {
-        
+
         $data=$request->all();
-        $data['password'] =  bcrypt($data['password']);
+        $data['password'] = $data['password'];
         $data['confirmed'] = 1;
         $data['account_type'] = 1;
 
@@ -89,7 +89,7 @@ class CarOwnerController extends Controller
 
         $driver = User::findOrFail($id);
         if($request->input('password')){
-            $data['password'] =  bcrypt($data['password']);
+            $data['password'] = $data['password'];
         }
         $driver->update($data);
 
