@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Transformers\CarTransformer;
+use App\Transformers\OwnerCarTransformer;
 use App\Models\Car;
 use App\Models\User;
 use DB;
@@ -23,7 +23,7 @@ class OwnerCarController extends Controller
         return response()->json([
             'data'=>fractal()
             ->collection($cars)
-            ->transformWith(new CarTransformer)
+            ->transformWith(new OwnerCarTransformer)
             ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
         ],200);
