@@ -50,7 +50,7 @@ class OwnerCarController extends Controller
         }
         return response()->json(fractal()
         ->item($car)
-        ->transformWith(new CarTransformer)
+        ->transformWith(new OwnerCarTransformer)
         ->toArray(),200);
     }
 
@@ -64,7 +64,7 @@ class OwnerCarController extends Controller
     {
         return response()->json(fractal()
         ->item($car)
-        ->transformWith(new CarTransformer)
+        ->transformWith(new OwnerCarTransformer)
         ->toArray(),200);
     }
 
