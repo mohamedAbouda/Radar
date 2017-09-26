@@ -28,7 +28,7 @@ class OwnerCarTransformer extends TransformerAbstract
 			'tyre_replacement_date' => $car->tyre_replacement_date,
 		];
         if(!$car->driver){
-			$data['driver'] = "";
+			$data['driver'] = new \stdClass(); //empty object
 		}
 		return $data;
     }
