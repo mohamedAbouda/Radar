@@ -27,14 +27,16 @@ class OwnerCarTransformer extends TransformerAbstract
 			'oil_change_date' => $car->oil_change_date,
 			'tyre_replacement_date' => $car->tyre_replacement_date,
 		];
-
+        if(!$car->driver){
+			$data['driver'] = "";
+		}
 		return $data;
     }
 
     public function includeDriver(Car $car)
 	{
-		if($car->driver){
-			return $this->item($car->driver,new UserTransformer);
-		}
+        if($car->driver){
+            return $this->item($car->driver,new UserTransformer);
+        }
 	}
 }
