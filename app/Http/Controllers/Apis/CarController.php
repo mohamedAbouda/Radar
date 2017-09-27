@@ -156,4 +156,18 @@ class CarController extends Controller
             'message' => 'Success.',
         ],200);
     }
+
+    public function incMilage(Request $request,Car $car)
+    {
+        $car->mile_age = floatval($car->mile_age) + floatval($request->get('mileage',0));
+        $car->save();
+        return response()->json([
+            'status' => 'true',
+            'data'=>fractal()
+            ->item($car)
+            ->transformWith(new CarTransformer)
+            ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+            ->toArray(),
+        ],200);
+    }
 }

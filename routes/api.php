@@ -108,6 +108,8 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 		'uses'=>'Apis\CarController@updateCarDetails'
 	]);
 
+	Route::post('/inc/car/milage/{car}','Apis\CarController@incMilage');
+
 	Route::post('/submit/radar',[
 
 		'uses'=>'Apis\RadarController@SubmitRadar'
