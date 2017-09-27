@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apis;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PusherController;
 use App\Http\Requests\Apis\CreateGroup;
 use App\Models\Group;
 use App\Models\User;
@@ -29,7 +30,7 @@ class GroupController extends Controller
 		return response()->json([
 			'id' => $createGroup->id,
 			'message'=>'The group has been created.',
-			],200 );
+		],200 );
 	}
 
 	public function groupAddUser(Request $request)
@@ -37,7 +38,7 @@ class GroupController extends Controller
 		$groupId = $request->input('group_id');
 		$checkgroup = Group::where('id',$groupId)->first();
 		if($checkgroup){
-
+			$tokens = [];
 			foreach ($request->input('users') as $user) {
 				$checkUser = User::where('id',$user)->first();
 				if($checkgroup->admin_id != $user && $checkUser){
@@ -49,8 +50,8 @@ class GroupController extends Controller
 					$groupUser->save();
 					$email = $checkUser->email;
 					$mess=[
-					'email'=>$email,
-					'confirmation_code'=>$confirmation_code,
+						'email'=>$email,
+						'confirmation_code'=>$confirmation_code,
 					];
 
 					try {
@@ -61,16 +62,30 @@ class GroupController extends Controller
 						});
 					} catch (\Exception $e) {
 					}
+
+					if (!$checkUser->registeration_id->isEmpty()) { // insert user tokens to send to
+						$tokens[] = $checkUser->registeration_id()->orderBy('id','DESC')->first()->device_id;
+					}
+				}
+			}
+
+			if ($tokens) { // if there are any device tokens to send notifications to
+				$group_admin = $checkgroup->admin;
+				$title = "You've been added to a group.";
+				$body = ($group_admin ? $group_admin->full_name : '[DELETED]')." invited you to a group,confirmation code has been sent to your email account."; // handeling if there is no admin just to make sure nothing goes wrong
+				try {
+					$pusher = new PusherController($title,$body,[],$tokens);
+				} catch (\Exception $e) {
 				}
 			}
 
 			return response()->json([
 				'message'=>'Group Request has been sent.',
-				],200 );
+			],200 );
 		}else{
 			return response()->json([
 				'message'=>'No group with this id.',
-				],400 );
+			],400 );
 		}
 	}
 
@@ -114,7 +129,7 @@ class GroupController extends Controller
 			->transformWith(new GroupTransformer)
 			->serializeWith(new \Spatie\Fractal\ArraySerializer())
 			->toArray(),
-			],200);
+		],200);
 	}
 
 	public function viewUsersGroup(Request $request)
@@ -135,16 +150,16 @@ class GroupController extends Controller
 					->transformWith(new UserTransformer)
 					->serializeWith(new \Spatie\Fractal\ArraySerializer())
 					->toArray(),
-					],200);
+				],200);
 			}else{
 				return response()->json([
 					'message'=>'No group with this id.',
-					],400 );
+				],400 );
 			}
 		}else{
 			return response()->json([
 				'message'=>'No group id is provided.',
-				],400 );
+			],400 );
 		}
 
 	}
