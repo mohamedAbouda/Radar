@@ -127,8 +127,14 @@ class HelpRequestController extends Controller
         $other_admin_ids = Group::whereIn('id',$groups_ids)->groupBy('admin_id')->pluck('admin_id')->toArray();
         $member_ids = array_unique(array_merge($other_admin_ids,$other_members_ids));
 
-        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids) {
-            $query->whereIn('id',$addressId)->whereIn('driver_id',$member_ids);
+        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids,$groups_ids) {
+            $query->whereIn('id',$addressId)->where(function($inner_query) use($member_ids,$groups_ids){
+                $inner_query->where(function($query) use($member_ids,$groups_ids){
+                    $query->whereIn('driver_id',$member_ids)->where('group_id',NULL);
+                })->orWhere(function($query) use($member_ids,$groups_ids){
+                    $query->where('group_id','<>',NULL)->whereIn('group_id',$groups_ids);
+                });
+            });
         })->get();
 
         return response()->json([
@@ -185,5 +191,31 @@ class HelpRequestController extends Controller
             'statusCode' => 500,
             'message' => 'Something went wrong.'
         ],500);
+    }
+
+    /**
+     * To confirm that the accident was answered and the tow truck is now available.
+     */
+    public function releaseTowTruck(Request $request)
+    {
+        $input = $request->all();
+        $accident = $input['accident_id'];
+        $tow_truck_id = $input['tow_truck_id'];
+
+        $tow_truck_accident = TowTruckAccident::where('accident_id',$accident)
+        ->where('tow_truck_id',$tow_truck_id)->first();
+
+        if (!$tow_truck_accident) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'Not found.'
+            ],404);
+        }
+        $tow_truck_accident->state = 1;
+        $tow_truck_accident->save();
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Operation completed.'
+        ]);
     }
 }

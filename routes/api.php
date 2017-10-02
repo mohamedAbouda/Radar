@@ -158,6 +158,7 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 
 	Route::post('accident','Apis\HelpRequestController@accident')->name('accident.report');
 	Route::post('towtruck/select','Apis\TowTruckController@selectTowTruck')->name('towtrucks.select');
+	Route::post('towtruck/release','Apis\HelpRequestController@releaseTowTruck')->name('towtrucks.release');
 
 	Route::post('news','Apis\NewsFeedController@index')->name('news.index');
 
