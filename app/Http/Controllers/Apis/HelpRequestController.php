@@ -123,8 +123,8 @@ class HelpRequestController extends Controller
         $admin_groups_ids = Group::where('admin_id',$user->id)->pluck('id')->toArray();
         $groups_ids = array_unique(array_merge($member_groups_ids, $admin_groups_ids));
 
-        $other_members_ids = GroupUser::whereIn('group_id',$groups_ids)->where('confirmed',1)->groupBy('user_id')->pluck('user_id')->toArray();
-        $other_admin_ids = Group::whereIn('id',$groups_ids)->groupBy('admin_id')->pluck('admin_id')->toArray();
+        $other_members_ids = GroupUser::whereIn('group_id',$groups_ids)->where('user_id','<>',$user->id)->where('confirmed',1)->groupBy('user_id')->pluck('user_id')->toArray();
+        $other_admin_ids = Group::whereIn('id',$groups_ids)->where('admin_id','<>',$user->id)->groupBy('admin_id')->pluck('admin_id')->toArray();
         $member_ids = array_unique(array_merge($other_admin_ids,$other_members_ids));
 
         $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids,$groups_ids) {
