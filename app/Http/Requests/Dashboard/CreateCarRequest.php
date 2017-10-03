@@ -26,7 +26,7 @@ class CreateCarRequest extends FormRequest
         return [
             'model'=>'required',
             'plate_number'=>'required',
-            'maintenance_date'=>'required|regex:/^\d{1,2}\/\d{1,2}\/\d{4}$/',
+            'maintenance_date'=>'required|date',
             'mile_age'=>'required|numeric',
 
 
