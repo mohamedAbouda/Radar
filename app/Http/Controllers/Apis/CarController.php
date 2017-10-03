@@ -8,6 +8,7 @@ use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
 use DB;
+use Carbon\Carbon;
 
 class CarController extends Controller
 {
@@ -95,10 +96,13 @@ class CarController extends Controller
     {
         $id = $request->input('car_id');
         $data = $request->all();
+
         if($id){
             $update = Car::findOrFail($id);
+            if (isset($data['maintenance_date'])) {
+                $data['maintenance_date'] = Carbon::createFromFormat('d M. Y',$data['maintenance_date'])->format('Y/m/d');
+            }
             $update->update($data);
-
             return response()->json([
                 'message'=>'The car details has been updated.',
             ],200 );
