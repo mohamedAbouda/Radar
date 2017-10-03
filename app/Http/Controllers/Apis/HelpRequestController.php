@@ -127,12 +127,12 @@ class HelpRequestController extends Controller
         $other_admin_ids = Group::whereIn('id',$groups_ids)->where('admin_id','<>',$user->id)->groupBy('admin_id')->pluck('admin_id')->toArray();
         $member_ids = array_unique(array_merge($other_admin_ids,$other_members_ids));
 
-        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids,$groups_ids) {
-            $query->whereIn('id',$addressId)->where(function($inner_query) use($member_ids,$groups_ids){
+        $helprequests = HelpRequest::whereHas('location',function ($query) use($addressId,$member_ids,$groups_ids,$user) {
+            $query->whereIn('id',$addressId)->where(function($inner_query) use($member_ids,$groups_ids,$user){
                 $inner_query->where(function($query) use($member_ids,$groups_ids){
                     $query->whereIn('driver_id',$member_ids)->where('group_id',NULL);
-                })->orWhere(function($query) use($member_ids,$groups_ids){
-                    $query->where('group_id','<>',NULL)->whereIn('group_id',$groups_ids);
+                })->orWhere(function($query) use($groups_ids,$user){
+                    $query->where('group_id','<>',NULL)->whereIn('group_id',$groups_ids)->where('driver_id','<>',$user->id);
                 });
             });
         })->get();
