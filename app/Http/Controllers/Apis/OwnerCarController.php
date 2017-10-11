@@ -116,12 +116,32 @@ class OwnerCarController extends Controller
                 ];
             }
         }
-        
+
         $car->drivers()->sync($car_drivers);
 
         return response()->json([
             'status' => 'true',
             'message' => 'Drivers added successfully.'
+        ]);
+    }
+
+    public function removeDriver(Request $request)
+    {
+        $user = $request->user();
+        $driver_id = $request->get('driver_id');
+        $car = Car::where('owner_id',$user->id)->where('id',$request->get('car_id'))->first();
+        if (!$car) {
+            return response()->json([
+                'status' => 'false',
+                'error' => 'Car not found'
+            ],404);
+        }
+
+        $car->drivers()->detach($driver_id);
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Drivers removed successfully.'
         ]);
     }
 }
