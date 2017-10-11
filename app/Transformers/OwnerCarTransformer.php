@@ -37,7 +37,7 @@ class OwnerCarTransformer extends TransformerAbstract
     public function includeDriver(Car $car)
 	{
         if($car->driver){
-            return $this->item($car->driver,new UserTransformer);
+            return $this->collection($car->driver,new UserTransformer);
         }
 	}
 }
