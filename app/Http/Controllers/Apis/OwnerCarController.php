@@ -104,18 +104,19 @@ class OwnerCarController extends Controller
             ],404);
         }
 
-        $car_drivers = [];
+        $car_drivers = $car->drivers()->select('driver_id','car_id')->get()->toArray();
 
         foreach ($drivers as $id) {
             $driver = User::where('id',$id)->first();
-            if ($driver) {
+            $check = DB::table('car_drivers')->select('id')->where('driver_id',$id)->where('car_id',$car->id)->first();
+            if ($driver && !$check) {
                 $car_drivers[] = [
                     'driver_id' => $driver->id,
                     'car_id' => $car->id
                 ];
             }
         }
-
+        
         $car->drivers()->sync($car_drivers);
 
         return response()->json([

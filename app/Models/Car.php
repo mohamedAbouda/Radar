@@ -8,7 +8,7 @@ class Car extends Model
 {
     protected $table = 'cars';
     protected $fillable = ['model','plate_number','maintenance_date','mile_age','registration_code','driver_id','owner_id','oil_change_date','tyre_replacement_date','oil_change_mileage','state'];
-
+    protected $hidden = ['pivot'];
 
    	public function drivers()
     {
