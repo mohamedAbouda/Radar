@@ -91,4 +91,36 @@ class OwnerCarController extends Controller
     {
         //
     }
+
+    public function addDriver(Request $request)
+    {
+        $user = $request->user();
+        $drivers = $request->get('drivers');
+        $car = Car::where('owner_id',$user->id)->where('id',$request->get('car_id'))->first();
+        if (!$car) {
+            return response()->json([
+                'status' => 'false',
+                'error' => 'Car not found'
+            ],404);
+        }
+
+        $car_drivers = [];
+
+        foreach ($drivers as $id) {
+            $driver = User::where('id',$id)->first();
+            if ($driver) {
+                $car_drivers[] = [
+                    'driver_id' => $driver->id,
+                    'car_id' => $car->id
+                ];
+            }
+        }
+
+        $car->drivers()->sync($car_drivers);
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Drivers added successfully.'
+        ]);
+    }
 }

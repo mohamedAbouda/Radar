@@ -166,4 +166,5 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 	 * Owner's cars CRUD
 	 */
 	Route::resource('owner/cars','Apis\OwnerCarController');
+	Route::post('owner/car/add/driver','Apis\OwnerCarController@addDriver');
 });
