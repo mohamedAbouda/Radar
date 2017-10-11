@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class OwnerCarTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['driver'];
+    protected $defaultIncludes = ['drivers'];
 
     /**
      * A Fractal transformer.
@@ -28,16 +28,17 @@ class OwnerCarTransformer extends TransformerAbstract
 			'oil_change_date' => $car->oil_change_date,
 			'tyre_replacement_date' => $car->tyre_replacement_date,
 		];
-        if(!$car->driver){
-			$data['driver'] = new \stdClass(); //empty object
+        if(!$car->drivers){
+			$data['drivers'] = new \stdClass(); //empty object
 		}
 		return $data;
     }
 
-    public function includeDriver(Car $car)
+    public function includeDrivers(Car $car)
 	{
-        if($car->driver){
-            return $this->collection($car->driver,new UserTransformer);
+        if($car->drivers){
+            // dd($this->collection($car->drivers,new UserTransformer)->serializeWith(new \Spatie\Fractal\ArraySerializer()));
+            return $this->collection($car->drivers,new UserTransformer);
         }
 	}
 }

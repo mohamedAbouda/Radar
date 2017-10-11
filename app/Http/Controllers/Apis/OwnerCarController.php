@@ -62,10 +62,11 @@ class OwnerCarController extends Controller
     */
     public function show(Car $car)
     {
-        return response()->json(fractal()
+        return response()->json(['data' => fractal()
         ->item($car)
         ->transformWith(new OwnerCarTransformer)
-        ->toArray(),200);
+        ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+        ->toArray()],200);
     }
 
     /**
