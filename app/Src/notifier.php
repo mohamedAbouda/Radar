@@ -13,9 +13,9 @@ if you want to add one just make new object of insert and add to it.
 for example i want to add notification section.
 before $insert->save(); add this $insert->section(); and add to the notifications table in DB.
 */	
-public function updateLocationSocket($driver_id,$lat,$lng,$bearing,$speed){
+public function updateLocationSocket($user_id,$lat,$lng,$bearing,$speed){
 
-	$carId = Car::where('driver_id',$driver_id)->pluck('id')->first();
+/*	$carId = Car::where('driver_id',$driver_id)->pluck('id')->first();
 
 	$updateLocation = Location::where('car_id',$carId)->update([
 
@@ -23,13 +23,13 @@ public function updateLocationSocket($driver_id,$lat,$lng,$bearing,$speed){
 		'latitude'=>$lng,
 		'bearing'=>$bearing,
 		'speed'=>$speed,
-	]);
+	]);*/
 
-	$id = Location::where('car_id',$carId)->pluck('id')->first();
+	//$id = Location::where('car_id',$carId)->pluck('id')->first();
 
   Redis::publish('location-channel',json_encode([
-  	'id'=>$id,
-    'driver_id'=>$driver_id,
+  	
+    'user_id'=>$user_id,
     'lat'=>$lat,
     'lng'=>$lng,
     'bearing'=>$bearing,
