@@ -175,6 +175,21 @@ class HelpRequestController extends Controller
         $input['location_id'] = $location->id;
 
         if ($accident = Accedent::create($input)) {
+            $owner = $car->owner;
+            if ($owner) {
+                $title = 'There\'s been an accident !';
+                $body = $request->user()->full_name.' has been in an accident contact him/her for more information.';
+                $data = [];
+                $token = $owner->registeration_id()->first();
+                try {
+                    if ($token) {
+                        $pusher = new PusherController($title, $body, $data, $token->device_id);
+                        $pusher->send();
+                    }
+                } catch (\Exception $e) {
+                }
+            }
+
             $occupied_trucks = TowTruckAccident::where('state',0)->pluck('tow_truck_id')
             ->toArray();
             $trucks = TowTruck::whereNotIn('id',$occupied_trucks)->get();
