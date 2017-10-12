@@ -25,7 +25,7 @@ class TowTruckUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|regex:/^([\+0]([0-9]+[\- ]?)+)$/',
             'pic' => 'nullable|image'
         ];
     }

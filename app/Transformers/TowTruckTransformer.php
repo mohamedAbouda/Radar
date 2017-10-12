@@ -15,9 +15,10 @@ class TowTruckTransformer extends TransformerAbstract
     public function transform(TowTruck $towtruck)
     {
         return [
-            'pic' => $towtruck->pic_url,
+            'id' => $towtruck->id,
             'name' => $towtruck->name,
             'phone' => $towtruck->phone,
+            'pic' => $towtruck->pic_url,
         ];
     }
 }

@@ -36,45 +36,44 @@ class RadarController extends Controller
 
                         $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
 
-                        $createRadarReport = RadarReport::create($data);
+                        if (isset($data['note']) && $data['note']) {
+                            $createRadarReport = RadarReport::create($data);
+                        }
                         return response()->json([
                             'message'=>'you have submit your Radar Report.',
-                            ],200 );
+                        ],200 );
                     }
                     $newLatLng = $this->merge($location->latitude,$location->longitude,$data['latitude'],$data['longitude']);
-                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first(); 
+                    $locationCount = Location::where('id',$location->id)->pluck('merge_count')->first();
                     $updateLocation = Location::where('id',$location->id)->update([
                         'latitude'=>$newLatLng['lat'],
                         'longitude'=>$newLatLng['lng'],
                         'merge_count'=>$locationCount+1,
-                        ]);
+                    ]);
                     $data['radar_id'] = Radar::where('location_id',$location->id)->pluck('id')->first();
-                    $radarReport = RadarReport::create($data);
-
+                    if (isset($data['note']) && $data['note']) {
+                        $radarReport = RadarReport::create($data);
+                    }
                     return response()->json([
                         'message'=>'You have upated and merged the latitude and longitude.',
-                        ],200 );
+                    ],200 );
                 }
-
-
             }
         }
-        $createLocation = Location::create($data);
 
+        $createLocation = Location::create($data);
         $data['location_id'] = $createLocation->id;
         $data['radius'] = 5;
         $createRadar = Radar::create($data);
 
         $data['radar_id'] = $createRadar->id;
-        $createRadarReport = RadarReport::create($data);
-
-
-
-
+        if (isset($data['note']) && $data['note']) {
+            $createRadarReport = RadarReport::create($data);
+        }
 
         return response()->json([
             'message'=>'You have submited the radar.',
-            ],200 );
+        ],200 );
     }
 
 
@@ -102,7 +101,7 @@ class RadarController extends Controller
             ->transformWith(new RadarTransformer)
             ->serializeWith(new \Spatie\Fractal\ArraySerializer())
             ->toArray(),
-            ],200);
+        ],200);
     }
 
     public function getRadar(Request $request)
@@ -118,11 +117,11 @@ class RadarController extends Controller
                 ->transformWith(new RadarTransformer)
                 ->serializeWith(new \Spatie\Fractal\ArraySerializer())
                 ->toArray(),
-                ],200);
+            ],200);
         }else{
             return response()->json([
                 'message'=>'No Radar with this id.',
-                ],400 );
+            ],400 );
         }
     }
 }

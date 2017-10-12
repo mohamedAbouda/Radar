@@ -29,17 +29,17 @@
 
 					<tr>
 						<td>Car</td>
-						<td>{{ $user->car->model }}</td>
+						<td>{{ $user->car ? $user->car->model : 'The driver has no car' }}</td>
 					</tr>
 
-				
-					
+
+
 				</tbody>
 			</table>
 		</div>
 		<div class="panel-footer">
 			<div class="text-center">
-                
+
             </div>
 		</div>
 	</div>

@@ -12,7 +12,6 @@
 			</div>
 			<table class="table table-bordered">
 				<thead>
-					<th>#</th>
 					<th>REPORTS</th>
 					<th>FINE</th>
 					<th>CAUSE</th>
@@ -20,22 +19,26 @@
 				</thead>
 				<tbody>
 					@foreach($reports as $report)
+					@if(!$report->note && !$report->fine_cause)
+					<?php continue; ?>
+					@endif
 					<tr>
 						<td>
-							{{ $counter_offset + $loop->iteration }}
-						</td>
-						<td>
-							<p>
-								{{ $report->note }}
-							</p>
+							@if(!$report->note)
+							<p class="text-danger">EMPTY</p>
+							@else
+							{{ $report->note }}
+							@endif
 						</td>
 						<td>
 							{{ $report->fine }}
 						</td>
 						<td>
-							<p>
-								{{ $report->fine_cause }}
-							</p>
+							@if(!$report->fine_cause)
+							<p class="text-danger">EMPTY</p>
+							@else
+							{{ $report->fine_cause }}
+							@endif
 						</td>
 						<td>
 							<a href="{{ route('dashboard.lagnas.reports.edit', $report->id) }}" class="btn btn-primary pull-left" style="margin-right:5px;"><i class="fa fa-edit"></i></a>

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
+use DB;
+use Carbon\Carbon;
 
 class CarController extends Controller
 {
@@ -14,9 +16,9 @@ class CarController extends Controller
     {
     	$carCode = $request->input('car_registration_code');
     	if($carCode){
-    		$checkCar = Car::where('registration_code',$carCode)->first();
+    		$checkCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->first();
     		if($checkCar){
-    			$updateCar = Car::where('registration_code',$carCode)->update([
+    			$updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
     				'driver_id'=>$request->user()->id,
     			]);
 
@@ -94,10 +96,13 @@ class CarController extends Controller
     {
         $id = $request->input('car_id');
         $data = $request->all();
+
         if($id){
             $update = Car::findOrFail($id);
+            if (isset($data['maintenance_date'])) {
+                $data['maintenance_date'] = Carbon::createFromFormat('d M. Y',$data['maintenance_date'])->format('Y/m/d');
+            }
             $update->update($data);
-
             return response()->json([
                 'message'=>'The car details has been updated.',
             ],200 );
@@ -153,6 +158,20 @@ class CarController extends Controller
         return response()->json([
             'statusCode' => 200,
             'message' => 'Success.',
+        ],200);
+    }
+
+    public function incMilage(Request $request,Car $car)
+    {
+        $car->mile_age = floatval($car->mile_age) + floatval($request->get('mileage',0));
+        $car->save();
+        return response()->json([
+            'status' => 'true',
+            'data'=>fractal()
+            ->item($car)
+            ->transformWith(new CarTransformer)
+            ->serializeWith(new \Spatie\Fractal\ArraySerializer())
+            ->toArray(),
         ],200);
     }
 }

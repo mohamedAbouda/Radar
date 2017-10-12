@@ -8,7 +8,7 @@ class HelpRequest extends Model
 {
     protected $table = 'help_requests';
     protected $fillable = [
-        'location_id','driver_id','note','is_accepted'
+        'location_id','driver_id','group_id','note','is_accepted'
     ];
 
     /**

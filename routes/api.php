@@ -73,6 +73,10 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 		'uses'=>'Apis\GroupController@groupAddUser'
 	]);
 
+	Route::post('/group/leave/{group}',[
+		'uses'=>'Apis\GroupController@leave'
+	]);
+
 	Route::post('/auth/edit/profile',[
 
 		'uses'=>'Apis\UserController@editProfile'
@@ -103,6 +107,8 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 
 		'uses'=>'Apis\CarController@updateCarDetails'
 	]);
+
+	Route::post('/inc/car/milage/{car}','Apis\CarController@incMilage');
 
 	Route::post('/submit/radar',[
 
@@ -149,4 +155,17 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 	Route::post('answer/help','Apis\HelpRequestController@answer')->name('helprequest.answerHelp');
 	Route::post('nearby/help','Apis\HelpRequestController@nearby')->name('helprequest.nearby');
 	Route::get('towtrucks','Apis\TowTruckController@index')->name('towtrucks.index');
+
+	Route::post('accident','Apis\HelpRequestController@accident')->name('accident.report');
+	Route::post('towtruck/select','Apis\TowTruckController@selectTowTruck')->name('towtrucks.select');
+	Route::post('towtruck/release','Apis\HelpRequestController@releaseTowTruck')->name('towtrucks.release');
+
+	Route::post('news','Apis\NewsFeedController@index')->name('news.index');
+
+	/**
+	 * Owner's cars CRUD
+	 */
+	Route::resource('owner/cars','Apis\OwnerCarController');
+	Route::post('owner/car/add/driver','Apis\OwnerCarController@addDriver');
+	Route::post('owner/car/remove/driver','Apis\OwnerCarController@removeDriver');
 });

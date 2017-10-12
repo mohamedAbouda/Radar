@@ -33,6 +33,9 @@ class UserTransformer extends TransformerAbstract
 			'profile_pic'=>$user->profile_pic,
 			'is_on_duty'=>$user->is_on_duty,
 		];
+		// if (isset($user->groupAdmin) && $user->groupAdmin) {
+		// 	$data['admin'] = 1;
+		// }
 
 		return $data;
 	}
