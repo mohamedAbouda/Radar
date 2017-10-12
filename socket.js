@@ -8,7 +8,7 @@ notificationclient.subscribe('location-channel');
 notificationclient.on('message',function (channel,location){
 	var data=JSON.parse(location);
 	data.dataType='location';
-	io.sockets.emit('location:' +data.driver_id,data);
+	io.sockets.emit('location',data);
 	console.log(location);
 });
 
