@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Src\notifier;
 use App\Models\User;
+use App\Models\CarDriver;
 use App\Models\Location;
 
 class DriverController extends Controller
@@ -22,7 +23,7 @@ class DriverController extends Controller
 		$data = $request->all();
 		$user = $request->user();
 
-		$car = Car::where('driver_id',$user->id)->first();
+		$car = CarDriver::where('driver_id',$user->id)->first();
 		if($car){
 			$checkLocationExists = Location::where('car_id',$car->id)->first();
 
