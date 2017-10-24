@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Transformers\UserTransformer;
+use App\Transformers\DriverTransformer;
 use App\Http\Requests\Apis\UpdateProfile;
 use App\Http\Requests\Apis\ChangePasswordRequest;
 use Hash;
@@ -27,7 +28,7 @@ class UserController extends Controller
 		return response()->json([
 			'data'=>fractal()
 			->item($user)
-			->transformWith(new UserTransformer)
+			->transformWith(new UserTransformer($user))
 			->serializeWith(new \Spatie\Fractal\ArraySerializer())
 			->toArray(),
 		],200);

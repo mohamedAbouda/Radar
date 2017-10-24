@@ -2,15 +2,26 @@
 
 namespace App\Transformers;
 
-use App\Models\User;
-
 use League\Fractal\TransformerAbstract;
-
+use App\Models\User;
+use App\Models\CarDriver;
+use App\Models\Location;
 
 class UserTransformer extends TransformerAbstract
 {
+	protected $defaultIncludes = ['location'];
+	protected $location = null;
 
-
+	function __construct($user = null)
+	{
+		$driver = !$user ? null : CarDriver::where('driver_id',$user->id)->orderBy('id','DESC')->first();
+		if ($driver) {
+			$location = Location::where('car_id',$driver->car_id)->orderBy('id','DESC')->first();
+			if ($location) {
+				$this->location = $location;
+			}
+		}
+	}
 
 	public function transform(User $user)
 	{
@@ -37,9 +48,17 @@ class UserTransformer extends TransformerAbstract
 		// 	$data['admin'] = 1;
 		// }
 
+		if (!$this->location) {
+			$data['location'] = new \stdClass();
+		}
+
 		return $data;
 	}
 
-
-
+	public function includeLocation(User $user)
+	{
+		if ($this->location) {
+			return $this->item($this->location,new LocationTransformer);
+		}
+	}
 }
