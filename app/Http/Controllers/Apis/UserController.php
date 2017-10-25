@@ -28,7 +28,7 @@ class UserController extends Controller
 		return response()->json([
 			'data'=>fractal()
 			->item($user)
-			->transformWith(new UserTransformer($user))
+			->transformWith(new UserTransformer)
 			->serializeWith(new \Spatie\Fractal\ArraySerializer())
 			->toArray(),
 		],200);
