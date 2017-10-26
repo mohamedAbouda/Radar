@@ -37,6 +37,7 @@ class UserTransformer extends TransformerAbstract
 		// }
 
 		$driver = CarDriver::where('driver_id',$user->id)->orderBy('id','DESC')->first();
+		dd($driver);
 		if ($driver) {
 			$location = Location::where('car_id',$driver->car_id)->orderBy('id','DESC')->first();
 			if (!$location) {
