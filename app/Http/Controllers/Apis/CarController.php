@@ -24,7 +24,7 @@ class CarController extends Controller
     			// ]);
 
                 CarDriver::create([
-                    'car_id' => $checkCar,
+                    'car_id' => $checkCar->id,
                     'driver_id' => $request->user()->id
                 ]);
 
