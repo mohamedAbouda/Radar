@@ -19,9 +19,14 @@ class CarController extends Controller
     	if($carCode){
     		$checkCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->first();
     		if($checkCar){
-    			$updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
-    				'driver_id'=>$request->user()->id,
-    			]);
+    			// $updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
+    			// 	'driver_id'=>$request->user()->id,
+    			// ]);
+
+                CarDriver::create([
+                    'car_id' => $checkCar,
+                    'driver_id' => $request->user()->id
+                ]);
 
     			return response()->json([
 	      			'message'=>'You have upated this car successfuly',
