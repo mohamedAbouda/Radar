@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
+use App\Models\CarDriver;
 use DB;
 use Carbon\Carbon;
 
@@ -117,7 +118,14 @@ class CarController extends Controller
     public function panic(Request $request)
     {
         $id = $request->get('driver_id');
-        $car = Car::where('driver_id',$id)->first();
+        $car_driver = CarDriver::where('driver_id',$id)->orderBy('id','DESC')->first();
+        if (!$car_driver) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'You have no car.',
+            ],404);
+        }
+        $car = Car::where('id',$car_driver->car_id)->first();
         if (!$car) {
             return response()->json([
                 'statusCode' => 404,
