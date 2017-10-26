@@ -10,7 +10,6 @@ use App\Models\Location;
 class UserTransformer extends TransformerAbstract
 {
 	protected $defaultIncludes = ['location'];
-	protected $location = null;
 
 	public function transform(User $user)
 	{
@@ -40,12 +39,10 @@ class UserTransformer extends TransformerAbstract
 		$driver = CarDriver::where('driver_id',$user->id)->orderBy('id','DESC')->first();
 		if ($driver) {
 			$location = Location::where('car_id',$driver->car_id)->orderBy('id','DESC')->first();
-			if ($location) {
-				$this->location = $location;
+			if (!$location) {
+				$data['location'] = new \stdClass();
 			}
-		}
-
-		if (!$this->location) {
+		}else{
 			$data['location'] = new \stdClass();
 		}
 
@@ -58,11 +55,8 @@ class UserTransformer extends TransformerAbstract
 		if ($driver) {
 			$location = Location::where('car_id',$driver->car_id)->orderBy('id','DESC')->first();
 			if ($location) {
-				$this->location = $location;
+				return $this->item($location,new LocationTransformer);
 			}
-		}
-		if ($this->location) {
-			return $this->item($this->location,new LocationTransformer);
 		}
 	}
 }
