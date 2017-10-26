@@ -25,7 +25,7 @@ class DriverController extends Controller
 
 		$car = CarDriver::where('driver_id',$user->id)->first();
 		if($car){
-			$checkLocationExists = Location::where('car_id',$car->car_id)->first();
+			$checkLocationExists = Location::where('car_id',$car->car_id)->orderBy('id','DESC')->first();
 
 			if($checkLocationExists){
 				$updateLocation = $checkLocationExists->update($data);
