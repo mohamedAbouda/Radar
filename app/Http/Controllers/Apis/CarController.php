@@ -23,10 +23,13 @@ class CarController extends Controller
     			// 	'driver_id'=>$request->user()->id,
     			// ]);
 
-                CarDriver::create([
-                    'car_id' => $checkCar->id,
-                    'driver_id' => $request->user()->id
-                ]);
+                $check = DB::table('car_drivers')->select('id')->where('driver_id',$request->user()->id)->where('car_id',$checkCar->id)->first();
+                if (!$check) {
+                    CarDriver::create([
+                        'car_id' => $checkCar->id,
+                        'driver_id' => $request->user()->id
+                    ]);
+                }
 
     			return response()->json([
 	      			'message'=>'You have upated this car successfuly',
