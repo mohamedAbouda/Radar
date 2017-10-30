@@ -38,12 +38,12 @@ class CarController extends Controller
     		}else{
 	    		return response()->json([
 	      			'message'=>'No car for this code',
-	      		],400 );
+	      		],404);
     		}
     	}else{
     		return response()->json([
       			'message'=>'No registration code submited',
-      		],400 );
+      		],400);
     	}
     }
 
@@ -64,7 +64,7 @@ class CarController extends Controller
             }else{
                return response()->json([
                     'message'=>'No Car has been found with this id.',
-                ],400);
+                ],404);
             }
         }elseif($registration_code){
             $car = Car::where('registration_code',$registration_code)->first();
@@ -79,12 +79,12 @@ class CarController extends Controller
             }else{
                return response()->json([
                     'message'=>'No Car has been found with this id.',
-                ],400);
+                ],404);
             }
         }else{
             return response()->json([
                 'message'=>'No Car id has submited.',
-            ],400 );
+            ],400);
         }
     }
 
@@ -119,7 +119,7 @@ class CarController extends Controller
         }else{
             return response()->json([
                 'message'=>'No Car id has submited.',
-            ],400 );
+            ],400);
         }
     }
 

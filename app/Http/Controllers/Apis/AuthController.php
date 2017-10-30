@@ -88,7 +88,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'error'=>'wrong name or password',
-            ],500);
+            ],403);
 
         }
 
@@ -177,7 +177,7 @@ class AuthController extends Controller
         else{
             return response()->json([
                 'error'=>'This user is not registered user',
-            ],404 );
+            ],404);
         }
     }
 
@@ -229,7 +229,7 @@ class AuthController extends Controller
         else{
             return response()->json([
                 'error'=>'This email is not registered',
-            ]);
+            ],404);
         }
     }
 
