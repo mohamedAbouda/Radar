@@ -24,10 +24,11 @@ class SignUpUser extends FormRequest
      */
     public function rules()
     {
+       // ^([\+0]([0-9]+[\- ]?)+)$
         return [
 
             'full_name'=>'required',
-            'phone_number'=>'required||regex:/^(\+|00[\d]{1,4}[\d]{5,11})|([\d]{1,4}[\d]{5,11})$/',
+            'phone_number'=>['required','regex:/^(\+|00[\d]{1,4}[\d]{5,11})|([\d]{1,4}[\d]{5,11})$/'],
             'password'=>'required',
             'email'=>'required | unique:users,email',
 
