@@ -25,7 +25,7 @@ class DriverController extends Controller
 
 		$car = CarDriver::where('driver_id',$user->id)->first();
 		if($car){
-			$checkLocationExists = Location::where('car_id',$car->id)->first();
+			$checkLocationExists = Location::where('car_id',$car->car_id)->orderBy('id','DESC')->first();
 
 			if($checkLocationExists){
 				$updateLocation = $checkLocationExists->update($data);
@@ -35,7 +35,7 @@ class DriverController extends Controller
 					],200 );
 
 			}else{
-				$data['car_id'] = $car->id;
+				$data['car_id'] = $car->car_id;
 				$data['type'] = 'Driver';
 				$createLocation = Location::create($data);
 				$pushLocation =$this->notifier->updateLocationSocket($user->id,$request->input('latitude'),$request->input('longitude'),$request->input('bearing'),$request->input('speed'));

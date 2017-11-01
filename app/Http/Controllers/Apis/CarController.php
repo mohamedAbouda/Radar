@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PusherController;
 use App\Transformers\CarTransformer;
 use App\Models\Car;
+use App\Models\CarDriver;
 use DB;
 use Carbon\Carbon;
 
@@ -18,9 +19,17 @@ class CarController extends Controller
     	if($carCode){
     		$checkCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->first();
     		if($checkCar){
-    			$updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
-    				'driver_id'=>$request->user()->id,
-    			]);
+    			// $updateCar = Car::where(DB::raw('BINARY `registration_code`'),$carCode)->update([
+    			// 	'driver_id'=>$request->user()->id,
+    			// ]);
+
+                $check = DB::table('car_drivers')->select('id')->where('driver_id',$request->user()->id)->where('car_id',$checkCar->id)->first();
+                if (!$check) {
+                    CarDriver::create([
+                        'car_id' => $checkCar->id,
+                        'driver_id' => $request->user()->id
+                    ]);
+                }
 
     			return response()->json([
 	      			'message'=>'You have upated this car successfuly',
@@ -29,12 +38,12 @@ class CarController extends Controller
     		}else{
 	    		return response()->json([
 	      			'message'=>'No car for this code',
-	      		],400 );
+	      		],404);
     		}
     	}else{
     		return response()->json([
       			'message'=>'No registration code submited',
-      		],400 );
+      		],400);
     	}
     }
 
@@ -55,7 +64,7 @@ class CarController extends Controller
             }else{
                return response()->json([
                     'message'=>'No Car has been found with this id.',
-                ],400);
+                ],404);
             }
         }elseif($registration_code){
             $car = Car::where('registration_code',$registration_code)->first();
@@ -70,12 +79,12 @@ class CarController extends Controller
             }else{
                return response()->json([
                     'message'=>'No Car has been found with this id.',
-                ],400);
+                ],404);
             }
         }else{
             return response()->json([
                 'message'=>'No Car id has submited.',
-            ],400 );
+            ],400);
         }
     }
 
@@ -110,14 +119,21 @@ class CarController extends Controller
         }else{
             return response()->json([
                 'message'=>'No Car id has submited.',
-            ],400 );
+            ],400);
         }
     }
 
     public function panic(Request $request)
     {
         $id = $request->get('driver_id');
-        $car = Car::where('driver_id',$id)->first();
+        $car_driver = CarDriver::where('driver_id',$id)->orderBy('id','DESC')->first();
+        if (!$car_driver) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => 'You have no car.',
+            ],404);
+        }
+        $car = Car::where('id',$car_driver->car_id)->first();
         if (!$car) {
             return response()->json([
                 'statusCode' => 404,

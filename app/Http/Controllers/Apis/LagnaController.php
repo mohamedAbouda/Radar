@@ -69,7 +69,7 @@ class LagnaController extends Controller
         $data['radius'] = 5;
         $createLagna = Lagna::create($data);
         $data['lagna_id'] = $createLagna->id;
-        
+
         if ((isset($data['note']) && $data['note']) || (isset($data['fine_cause']) && $data['fine_cause'])) {
             $createLagnaReport = LagnaReport::create($data);
         }
@@ -120,7 +120,7 @@ class LagnaController extends Controller
         }else{
             return response()->json([
                 'message'=>'No Lagna with this id.',
-                ],400 );
+            ],404);
         }
     }
 }

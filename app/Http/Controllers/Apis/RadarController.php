@@ -121,7 +121,7 @@ class RadarController extends Controller
         }else{
             return response()->json([
                 'message'=>'No Radar with this id.',
-            ],400 );
+            ],404);
         }
     }
 }

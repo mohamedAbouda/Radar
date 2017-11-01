@@ -85,7 +85,7 @@ class GroupController extends Controller
 		}else{
 			return response()->json([
 				'message'=>'No group with this id.',
-			],400 );
+			],404);
 		}
 	}
 
@@ -154,12 +154,12 @@ class GroupController extends Controller
 			}else{
 				return response()->json([
 					'message'=>'No group with this id.',
-				],400 );
+				],404);
 			}
 		}else{
 			return response()->json([
 				'message'=>'No group id is provided.',
-			],400 );
+			],400);
 		}
 
 	}
