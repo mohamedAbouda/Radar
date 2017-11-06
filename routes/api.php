@@ -168,4 +168,6 @@ Route::group(['middleware'=>['JWT.auth']],function (){
 	Route::resource('owner/cars','Apis\OwnerCarController');
 	Route::post('owner/car/add/driver','Apis\OwnerCarController@addDriver');
 	Route::post('owner/car/remove/driver','Apis\OwnerCarController@removeDriver');
+
+	Route::get('car/models' , 'Apis\CarModelController@index');
 });
