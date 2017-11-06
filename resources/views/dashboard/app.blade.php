@@ -260,6 +260,17 @@
         <li class="brown with-sub">
             <span>
                 <i class="fa fa-car"></i>
+                <span class="lbl">Car models</span>
+            </span>
+            <ul>
+                <li><a href="{{route('dashboard.carmodels.index')}}"><span class="lbl">All</span></a></li>
+                <li><a href="{{route('dashboard.carmodels.create')}}"><span class="lbl">Add new</span></a></li>
+            </ul>
+        </li>
+
+        <li class="brown with-sub">
+            <span>
+                <i class="fa fa-car"></i>
                 <span class="lbl">Cars</span>
             </span>
             <ul>
