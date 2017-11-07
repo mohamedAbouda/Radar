@@ -20,6 +20,7 @@ class OwnerCarTransformer extends TransformerAbstract
         $data = [
 			'id'=>$car->id,
             'model' => $car->model ? $car->model->name : '',
+            'model_id' => $car->model ? $car->model->id : '',
 			'model_pic_url' => $car->model ? $car->model->pic_url : '',
 			'plate_number'=>$car->plate_number,
             'maintenance_date' => Carbon::parse($car->maintenance_date)->format('d M. Y'),
