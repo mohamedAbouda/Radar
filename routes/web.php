@@ -136,4 +136,5 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('accidents','Dashboard\AccedentController');
     Route::resource('helprequests','Dashboard\HelpRequestController');
     Route::resource('news','Dashboard\NewsFeedController');
+    Route::resource('carmodels','Dashboard\CarModelController');
 });

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\CarModel;
 use App\Http\Requests\Dashboard\CreateCarRequest;
+
 class CarController extends Controller
 {
     protected $mainRedirect = 'dashboard.cars.';
@@ -24,7 +26,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view($this->mainRedirect . 'create');
+        $data['models'] = CarModel::pluck('name','id')->toArray();
+        return view($this->mainRedirect . 'create',$data);
 
     }
 
@@ -54,7 +57,7 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        $car = Car::with('driver','owner')->where('id',$id)->first();;
+        $car = Car::with('drivers','owner')->where('id',$id)->first();;
 
         return view($this->mainRedirect . 'show')->with(['car'=>$car]);
     }
@@ -67,9 +70,9 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        $car = Car::findOrFail($id);
-
-        return view($this->mainRedirect . 'edit')->with(['car'=>$car]);
+        $data['car'] = Car::findOrFail($id);
+        $data['models'] = CarModel::pluck('name','id')->toArray();
+        return view($this->mainRedirect . 'edit' , $data);
     }
 
     /**

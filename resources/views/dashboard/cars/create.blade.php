@@ -13,16 +13,15 @@
                 <div class="col-md-6">
                 <input type="hidden" name="owner_id" value="{{$id}}">
                     <div class="form-group">
-                        <label for="#">Car Model</label>
-                      
-                        <input name="model" class="form-control" value="{{old('model')}}">
+                        <label for="model_id">Car Model</label>
+                        {{ Form::select('model_id' , $models , old('model_id') , ['id' => 'model_id' , 'class' => 'form-control']) }}
                     </div>
                 </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Plate No.</label>
-                      
+
                         <input name="plate_number" class="form-control" value="{{old('plate_number')}}">
                     </div>
                 </div>
@@ -30,22 +29,22 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Maintenance Date</label>
-                      
+
                         <input name="maintenance_date" class="form-control" value="{{old('maintenance_date')}}">
-                        **EX: 4/1/2001 or 12/12/2001 
+                        **EX: 4/1/2001 or 12/12/2001
                     </div>
                 </div>
 
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Mile Age</label>
-                      
+
                         <input name="mile_age" class="form-control" value="{{old('mile_age')}}">
                     </div>
                 </div>
 
-               
-            
+
+
 
                 <div class="col-md-12">
                     <div class="form-group">

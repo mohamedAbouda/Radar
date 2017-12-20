@@ -13,16 +13,15 @@
                   {{ csrf_field() }}
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="#">Car Model</label>
-                      
-                        <input name="model" class="form-control" value="{{$car->model}}">
+                        <label for="model_id">Car Model</label>
+                        {{ Form::select('model_id' , $models , $car->model_id , ['id' => 'model_id' , 'class' => 'form-control']) }}
                     </div>
                 </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Plate No.</label>
-                      
+
                         <input name="plate_number" class="form-control" value="{{$car->plate_number}}">
                     </div>
                 </div>
@@ -30,7 +29,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Maintenance Date</label>
-                      
+
                         <input name="maintenance_date" class="form-control" value="{{$car->maintenance_date}}">
                         **EX: 2002/2/23
                     </div>
@@ -39,13 +38,13 @@
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="#">Car Mile Age</label>
-                      
+
                         <input name="mile_age" class="form-control" value="{{$car->mile_age}}">
                     </div>
                 </div>
 
-               
-            
+
+
 
                 <div class="col-md-12">
                     <div class="form-group">

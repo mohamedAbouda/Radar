@@ -4,10 +4,10 @@
 @section('content')
 <div class="col-md-12">
 <div class="panel-heading">
-			
+
 		</div>
 	<div class="panel panel-default">
-		
+
 		<div class="panel-body">
 
 			<table class="table table-bordered">
@@ -20,7 +20,7 @@
 				<tbody>
 				@foreach($cars as $car)
 					<tr>
-						<td>{{ strip_tags($car->model) }}</td>
+						<td>{{ $car->model ? strip_tags($car->model->name) : '' }}</td>
 						<td>{{ strip_tags($car->plate_number) }}</td>
 						<td>{{ strip_tags($car->registration_code) }}</td>
 

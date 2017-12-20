@@ -24,7 +24,7 @@ class CreateCarRequest extends FormRequest
     public function rules()
     {
         return [
-            'model'=>'required',
+            'model_id'=>'required|exists:models,id',
             'plate_number'=>'required',
             'maintenance_date'=>'required|date',
             'mile_age'=>'required|numeric',

@@ -38,11 +38,15 @@
 					</tr>
 
 					<tr>
-						<td>Driver</td>
+						<td>Drivers</td>
 						<td>
-						@if($car->driver)
-						<a href="{{ route('dashboard.drivers.show', ['driver' => $car->driver->id]) }}">{{ $car->driver->full_name }}</a>
-						@endif
+							<ul>
+								@foreach($car->drivers as $driver)
+								<li>
+									<a href="{{ route('dashboard.drivers.show', ['driver' => $driver->id]) }}">{{ $driver->full_name }}</a>
+								</li>
+								@endforeach
+							</ul>
 						</td>
 					</tr>
 
@@ -50,14 +54,14 @@
 						<td>Owner</td>
 						<td><a href="{{ route('dashboard.carOwners.show', ['owner' => $car->owner->id]) }}">{{ $car->owner->full_name }}</a></td>
 					</tr>
-				
-					
+
+
 				</tbody>
 			</table>
 		</div>
 		<div class="panel-footer">
 			<div class="text-center">
-                
+
             </div>
 		</div>
 	</div>
