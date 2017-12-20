@@ -28,6 +28,9 @@ Redis::publish('test-channel',json_encode($data));
 return view('welcomeSocket');
 });
 
+Auth::routes();
+
+
 Route::get('socket', 'HomeController@updateLocation');
 
 Route::get('listen/{id}', 'HomeController@listenLocation');
